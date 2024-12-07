@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ResultWindow {
-    JFrame frame = new JFrame();
+    JFrame frame = new JFrame("Result Window");
     public ImageIcon image = new ImageIcon("X:\\Applications\\IntelliJ IDEA Community Edition 2023.3.5\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
 
 
