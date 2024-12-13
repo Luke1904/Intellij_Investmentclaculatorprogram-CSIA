@@ -15,7 +15,7 @@ public class CalculatorWindow implements ActionListener {
     JLabel label4 = new JLabel("Choose Contribution Interval");
     JLabel label5 = new JLabel("Choose an Asset");
     JPanel panel1 = new JPanel();
-    public ImageIcon image = new ImageIcon("X:\\Applications\\IntelliJ IDEA Community Edition 2023.3.5\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
+    public ImageIcon image = new ImageIcon("X:\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
     JTextField textField = new JTextField();
     JTextField textField1 = new JTextField();
     JLabel outputLabel = new JLabel();
@@ -52,15 +52,18 @@ public class CalculatorWindow implements ActionListener {
         option2.setVisible(false);
 
         resetButton.setBounds(700, 400, 70, 30);
+        resetButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(resetButton);
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
 
         textField.setBounds(490, 265, 100, 20);
+        textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField);
 
         textField1.setBounds(490, 330, 100, 20);
+        textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField1);
 
         String[] timeInterval = {"Monthly", "Annually"};
@@ -168,7 +171,7 @@ public class CalculatorWindow implements ActionListener {
                     isInputValid = false;
                 } else {
                     isValid = true;
-                    textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
                     outputLabel.setText("");
                 }
 
@@ -185,7 +188,7 @@ public class CalculatorWindow implements ActionListener {
                     isInputValid = false;
                 } else {
                     isValid1 = true;
-                    textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
                     outputLabel1.setText("");
                 }
 
