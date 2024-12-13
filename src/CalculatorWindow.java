@@ -24,7 +24,7 @@ public class CalculatorWindow implements ActionListener {
     JComboBox<String> dropdown2;
     public boolean isValid = false;
     public boolean isValid1 = false;
-    JButton resetButton = new JButton();
+    JButton resetButton = new JButton("Reset");
     JRadioButton option1 = new JRadioButton("beginning");
     JRadioButton option2 = new JRadioButton("end");
     ButtonGroup group = new ButtonGroup();
@@ -51,7 +51,7 @@ public class CalculatorWindow implements ActionListener {
         option1.setVisible(false);
         option2.setVisible(false);
 
-        resetButton.setBounds(700, 400, 50, 30);
+        resetButton.setBounds(700, 400, 70, 30);
         frame.add(resetButton);
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
@@ -139,7 +139,7 @@ public class CalculatorWindow implements ActionListener {
         outputLabel.setForeground(Color.red);
         frame.add(outputLabel);
 
-        outputLabel1.setBounds(604, 328, 500, 20);
+        outputLabel1.setBounds(604, 330, 500, 20);
         outputLabel1.setForeground(Color.red);
         frame.add(outputLabel1);
 
