@@ -4,8 +4,15 @@ import java.awt.*;
 public class ResultWindow {
     JFrame frame = new JFrame("Result Window");
     public ImageIcon image = new ImageIcon("X:\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
-    JPanel panel2 = new JPanel();
-    XOYGraphic graphic = new XOYGraphic();
+    JPanel panel2 = new JPanel(){
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.setColor(Color.BLACK);
+            int lineY = getHeight() / 2;
+            g.drawLine(20, lineY, getWidth() - 20, lineY);
+        }
+    };
 
 
     ResultWindow(){
@@ -19,8 +26,8 @@ public class ResultWindow {
         frame.setIconImage(image.getImage());
         frame.getContentPane().setBackground(new Color(203, 203, 203));
 
-        graphic.setBounds(458, 149, 200, 200);
-        frame.add(graphic);
+
+
 
 
 
@@ -30,6 +37,8 @@ public class ResultWindow {
         panel2.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel2.setBorder(BorderFactory.createLineBorder(Color.black));
         frame.add(panel2);
+
+
 
 
 
