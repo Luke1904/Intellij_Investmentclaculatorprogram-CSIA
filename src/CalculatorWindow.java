@@ -3,6 +3,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
@@ -14,20 +15,22 @@ public class CalculatorWindow implements ActionListener {
     JLabel label3 = new JLabel("Contribution Amount");
     JLabel label4 = new JLabel("Choose Contribution Interval");
     JLabel label5 = new JLabel("Choose an Asset");
+    JLabel label6 = new JLabel("Choose time interval (in years)");
     JPanel panel1 = new JPanel();
     public ImageIcon image = new ImageIcon("X:\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
     JTextField textField = new JTextField();
     JTextField textField1 = new JTextField();
+    JTextField textField2 = new JTextField();
     JLabel outputLabel = new JLabel();
     JLabel outputLabel1 = new JLabel();
+    JLabel outputLabel2 = new JLabel();
     JComboBox<String> dropdown1;
     JComboBox<String> dropdown2;
-    public boolean isValid = false;
-    public boolean isValid1 = false;
     JButton resetButton = new JButton("Reset");
     JRadioButton option1 = new JRadioButton("beginning");
     JRadioButton option2 = new JRadioButton("end");
     ButtonGroup group = new ButtonGroup();
+    public boolean[] valid = new boolean[3];
 
     CalculatorWindow(){
         Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
@@ -58,13 +61,17 @@ public class CalculatorWindow implements ActionListener {
         resetButton.setVisible(true);
 
 
-        textField.setBounds(490, 265, 100, 20);
+        textField.setBounds(490, 264, 100, 20);
         textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField);
 
         textField1.setBounds(490, 330, 100, 20);
         textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField1);
+
+        textField2.setBounds(490, 639, 100, 20);
+        textField2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        frame.add(textField2);
 
         String[] timeInterval = {"Monthly", "Annually"};
         dropdown1 = new JComboBox<>(timeInterval);
@@ -124,6 +131,9 @@ public class CalculatorWindow implements ActionListener {
         label5.setBounds(489, 480, 200, 30);
         frame.add(label5);
 
+        label6.setBounds(489, 600, 220, 30);
+        frame.add(label6);
+
         calc_Button.setBounds(489, 704, 100, 30);
         calc_Button.addActionListener(this);
         calc_Button.setFocusable(false);
@@ -146,6 +156,10 @@ public class CalculatorWindow implements ActionListener {
         outputLabel1.setForeground(Color.red);
         frame.add(outputLabel1);
 
+        outputLabel2.setBounds(604, 639, 500, 20);
+        outputLabel2.setForeground(Color.red);
+        frame.add(outputLabel2);
+
 
         panel1.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel1.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -153,60 +167,99 @@ public class CalculatorWindow implements ActionListener {
 
         frame.setVisible(true);
 
+
+
+
         calc_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean isInputValid = true;
-
                 String input = textField.getText();
                 if (input.isEmpty()) {
-                    isValid = false;
+                    valid[0] = false;
                     textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                     outputLabel.setText("Input cannot be empty.");
-                    isInputValid = false;
                 } else if (!input.matches("\\d+")) {
-                    isValid = false;
+                    valid[0] = false;
                     textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                     outputLabel.setText("Please enter a valid number.");
-                    isInputValid = false;
                 } else {
-                    isValid = true;
+                    valid[0] = true;
                     textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
                     outputLabel.setText("");
                 }
+                VerifyValidity();
+            }
+        });
 
+        calc_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 String input1 = textField1.getText();
                 if (input1.isEmpty()) {
-                    isValid1 = false;
+                    valid[1] = false;
                     textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                     outputLabel1.setText("Input cannot be empty.");
-                    isInputValid = false;
                 } else if (!input1.matches("\\d+")) {
-                    isValid1 = false;
+                    valid[1] = false;
                     textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                     outputLabel1.setText("Please enter a valid number.");
-                    isInputValid = false;
                 } else {
-                    isValid1 = true;
+                     valid[1] = true;
                     textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
                     outputLabel1.setText("");
                 }
+                VerifyValidity();
+            }
+        });
 
 
-                if (isValid && isValid1 && isInputValid) {
-                    frame.dispose();
-                    ResultWindow resultWindow = new ResultWindow();
+
+        calc_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input2 = textField2.getText();
+                if(input2.isEmpty()){
+                    valid[2] = false;
+                    textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    outputLabel2.setText("Input cannot be empty.");
+                } else if (!input2.matches("\\d+")) {
+                    valid[2] = false;
+                    textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    outputLabel2.setText("Enter a valid number.");
+                } else if (input2.length() > 2) {
+                    textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    outputLabel2.setText("Input cannot be over 100.");
+                } else{
+                    valid[2] = true;
+                    textField2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+                    outputLabel2.setText("");
                 }
+                VerifyValidity();
             }
         });
 
 
     }
+
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == returnButton) {
             frame.dispose();
             MainMenu menu = new MainMenu();
+        }
+    }
+
+    public void VerifyValidity(){
+        boolean moveToNextWindow = true;
+        for(int i = 0; i < 3; i++){
+            if(valid[i] == false){
+                moveToNextWindow = false;
+                break;
+            }
+        }
+        if(moveToNextWindow == true) {
+            frame.dispose();
+            ResultWindow result = new ResultWindow();
         }
     }
 }
