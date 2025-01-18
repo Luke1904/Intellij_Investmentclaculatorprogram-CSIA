@@ -22,9 +22,16 @@ public class CalculatorWindow implements ActionListener {
     JLabel outputLabel1 = new JLabel();
     JComboBox<String> dropdown1;
     JComboBox<String> dropdown2;
+    JComboBox<String> dropdown3;
+    JComboBox<String> dropdown4;
+    JComboBox<String> dropdown5;
+    JComboBox<String> dropdown6;
+    JComboBox<String> dropdown7;
+    JComboBox<String> dropdown8;
     public boolean isValid = false;
     public boolean isValid1 = false;
-    JButton resetButton = new JButton();
+    JButton resetButton = new JButton("reset");
+    JButton resetButton1 = new JButton("reset");
     JRadioButton option1 = new JRadioButton("beginning");
     JRadioButton option2 = new JRadioButton("end");
     ButtonGroup group = new ButtonGroup();
@@ -51,10 +58,15 @@ public class CalculatorWindow implements ActionListener {
         option1.setVisible(false);
         option2.setVisible(false);
 
-        resetButton.setBounds(700, 400, 50, 30);
+        resetButton.setBounds(700, 400, 70, 30);
         frame.add(resetButton);
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
+
+        resetButton1.setBounds(700, 514, 70, 30);
+        frame.add(resetButton1);
+        resetButton1.setFocusable(false);
+        resetButton1.setVisible(true);
 
 
         textField.setBounds(490, 265, 100, 20);
@@ -93,7 +105,93 @@ public class CalculatorWindow implements ActionListener {
         dropdown2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption = (String) dropdown2.getSelectedItem();
+                String selectedOption2 = (String) dropdown2.getSelectedItem();
+                DropdownManager.setVisibility(selectedOption2, dropdown2, dropdown3, dropdown4, dropdown5, dropdown6, dropdown7);
+            }
+        });
+
+        String[] stockOptions = {"NASDAQ100", "S&P500", "DJ30", "Nikkei225"};
+        dropdown3 = new JComboBox<>(stockOptions);
+        dropdown3.setToolTipText("Select stock");
+        dropdown3.setVisible(false);
+        dropdown3.setBounds(489, 514, 200, 30);
+        dropdown3.setBackground(new Color(203, 203, 203));
+        dropdown3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        dropdown3.setFocusable(false);
+        frame.add(dropdown3);
+        dropdown3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption3 = (String) dropdown3.getSelectedItem();
+
+            }
+        });
+
+        String[] bondOptions = {"Vanguard total bond market ETF", "J.P. Morgan limited duration bond ETF", "Vanguard Short-term Bond Etf", "SPDR Portfolio Short Term Treasury ETF"};
+        dropdown4 = new JComboBox<>(bondOptions);
+        dropdown4.setToolTipText("Select bond");
+        dropdown4.setVisible(false);
+        dropdown4.setBounds(489, 514, 200, 30);
+        dropdown4.setBackground(new Color(203, 203, 203));
+        dropdown4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        dropdown4.setFocusable(false);
+        frame.add(dropdown4);
+        dropdown4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption4 = (String) dropdown4.getSelectedItem();
+
+            }
+        });
+
+        String[] realEstateOptions = {"Prologis Inc.", "American Tower Corp.", "Digital Realty Trust Inc.", "AvalonBay Communities Inc."};
+        dropdown5 = new JComboBox<>(realEstateOptions);
+        dropdown5.setToolTipText("Select real estate");
+        dropdown5.setVisible(false);
+        dropdown5.setBounds(489, 514, 200, 30);
+        dropdown5.setBackground(new Color(203, 203, 203));
+        dropdown5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        dropdown5.setFocusable(false);
+        frame.add(dropdown5);
+        dropdown5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption5 = (String) dropdown5.getSelectedItem();
+
+            }
+        });
+
+        String[] cryptoCurrencyOptions = {"Bitcoin", "Ethereum", "Tether", "Solana"};
+        dropdown6 = new JComboBox<>(cryptoCurrencyOptions);
+        dropdown6.setToolTipText("Select cryptocurrency");
+        dropdown6.setVisible(false);
+        dropdown6.setBounds(489, 514, 200, 30);
+        dropdown6.setBackground(new Color(203, 203, 203));
+        dropdown6.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        dropdown6.setFocusable(false);
+        frame.add(dropdown6);
+        dropdown6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption6 = (String) dropdown6.getSelectedItem();
+
+            }
+        });
+
+        String[] commoditiesOptions = {"Gold", "Natural Gas", "Copper", "Silver"};
+        dropdown7 = new JComboBox<>(commoditiesOptions);
+        dropdown7.setToolTipText("Select commodity");
+        dropdown7.setVisible(false);
+        dropdown7.setBounds(489, 514, 200, 30);
+        dropdown7.setBackground(new Color(203, 203, 203));
+        dropdown7.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        dropdown7.setFocusable(false);
+        frame.add(dropdown7);
+        dropdown7.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption7 = (String) dropdown7.getSelectedItem();
+
             }
         });
 
@@ -102,6 +200,18 @@ public class CalculatorWindow implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                     option1.setVisible(false);
                     option2.setVisible(false);
+            }
+        });
+
+        resetButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dropdown3.setVisible(false);
+                dropdown4.setVisible(false);
+                dropdown5.setVisible(false);
+                dropdown6.setVisible(false);
+                dropdown7.setVisible(false);
+                dropdown2.setVisible(true);
             }
         });
 
