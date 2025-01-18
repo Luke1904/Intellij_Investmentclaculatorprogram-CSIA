@@ -12,7 +12,7 @@ public class MainMenu implements ActionListener{
     JButton button1 = new JButton("Go to investment calculator");
     JButton button2 = new JButton("Go to saves");
     JPanel panel = new JPanel();
-    public ImageIcon image = new ImageIcon("X:\\Applications\\IntelliJ IDEA Community Edition 2023.3.5\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
+    public ImageIcon image = new ImageIcon("X:\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
     JLabel label = new JLabel("Main Menu");
 
 
