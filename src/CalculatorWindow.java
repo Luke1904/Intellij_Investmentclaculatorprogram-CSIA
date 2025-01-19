@@ -37,6 +37,7 @@ public class CalculatorWindow implements ActionListener {
     JRadioButton option1 = new JRadioButton("beginning");
     JRadioButton option2 = new JRadioButton("end");
     ButtonGroup group = new ButtonGroup();
+    public int startingAmount = 0, contributionAmount = 0;
     public String selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5, selectedOption6, selectedOption7, selectedOption8, selectedOption9;
 
     CalculatorWindow(){
@@ -307,6 +308,7 @@ public class CalculatorWindow implements ActionListener {
             outputLabel.setText("Please enter a valid number.");
             isInputValid = false;
         } else {
+            startingAmount = Integer.parseInt(input);
             isValid = true;
             textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             outputLabel.setText("");
@@ -322,6 +324,7 @@ public class CalculatorWindow implements ActionListener {
             outputLabel1.setText("Please enter a valid number.");
             isInputValid = false;
         } else {
+            contributionAmount = Integer.parseInt(input1);
             isValid1 = true;
             textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             outputLabel1.setText("");
