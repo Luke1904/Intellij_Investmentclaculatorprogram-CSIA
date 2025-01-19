@@ -20,7 +20,9 @@ public class CalculatorWindow implements ActionListener {
     JTextField textField1 = new JTextField();
     JLabel outputLabel = new JLabel();
     JLabel outputLabel1 = new JLabel();
-    JLabel outputLabel2 = new JLabel("select beginning or end");
+    JLabel outputLabel2 = new JLabel();
+    JLabel outputLabel3 = new JLabel();
+    JLabel outputLabel4 = new JLabel();
     JComboBox<String> dropdown1;
     JComboBox<String> dropdown2;
     JComboBox<String> dropdown3;
@@ -28,7 +30,8 @@ public class CalculatorWindow implements ActionListener {
     JComboBox<String> dropdown5;
     JComboBox<String> dropdown6;
     JComboBox<String> dropdown7;
-    public boolean isValidTextField = false;
+    public boolean option1IsSelected = false;
+    public boolean option2IsSelected = false;
     JButton resetButton = new JButton("reset");
     JButton resetButton1 = new JButton("reset");
     JRadioButton option1 = new JRadioButton("beginning");
@@ -88,6 +91,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                option1IsSelected = true;
                 selectedOption1 = (String) dropdown1.getSelectedItem();
                 if(Objects.equals(selectedOption1, "Monthly") || Objects.equals(selectedOption1, "Annually")){
                     option1.setVisible(true);
@@ -107,6 +111,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                option2IsSelected = true;
                 selectedOption2 = (String) dropdown2.getSelectedItem();
                 DropdownManager.setVisibility(selectedOption2, dropdown2, dropdown3, dropdown4, dropdown5, dropdown6, dropdown7);
             }
@@ -199,6 +204,9 @@ public class CalculatorWindow implements ActionListener {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                    outputLabel3.setText("");
+                    option1IsSelected = false;
+                    group.clearSelection();
                     option1.setVisible(false);
                     option2.setVisible(false);
             }
@@ -207,6 +215,7 @@ public class CalculatorWindow implements ActionListener {
         resetButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                option2IsSelected = false;
                 dropdown3.setVisible(false);
                 dropdown4.setVisible(false);
                 dropdown5.setVisible(false);
@@ -250,14 +259,21 @@ public class CalculatorWindow implements ActionListener {
         outputLabel.setForeground(Color.red);
         frame.add(outputLabel);
 
-        outputLabel1.setBounds(604, 328, 500, 20);
+        outputLabel1.setBounds(604, 329, 500, 20);
         outputLabel1.setForeground(Color.red);
         frame.add(outputLabel1);
 
-        outputLabel2.setBounds(620, 450, 500, 20);
-        outputLabel2.setForeground(Color.red);
-        outputLabel2.setVisible(false);
+        outputLabel2.setBounds(780, 401, 500, 20);
+        outputLabel2.setForeground(Color.RED);
         frame.add(outputLabel2);
+
+        outputLabel3.setBounds(700, 450, 500, 20);
+        outputLabel3.setForeground(Color.red);
+        frame.add(outputLabel3);
+
+        outputLabel4.setBounds(780, 516, 500, 20);
+        outputLabel4.setForeground(Color.RED);
+        frame.add(outputLabel4);
 
 
         panel1.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
@@ -269,20 +285,18 @@ public class CalculatorWindow implements ActionListener {
         calc_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                isValidTextField = validateTextField();
-                if(isValidTextField){
+                if(validateTextFieldsAndDropDowns()){
                     frame.dispose();
                     ResultWindow resultWindow = new ResultWindow();
                 }
-
             }
         });
 
 
     }
 
-    public boolean validateTextField (){
-        boolean isInputValid = true, isValid = false, isValid1 = false;
+    public boolean validateTextFieldsAndDropDowns (){
+        boolean isInputValid = true, isValid = false, isValid1 = false, isValidForTextFields = false;
         String input = textField.getText();
         if (input.isEmpty()) {
             textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -312,19 +326,48 @@ public class CalculatorWindow implements ActionListener {
             textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             outputLabel1.setText("");
         }
-        return isValid && isValid1 && isInputValid;
+        if(isValid && isValid1 && isInputValid){
+            isValidForTextFields = true;
+        }
+        boolean valid1 = false, valid2 = false, valid3 = false, isValidForDropDown = false;
+        if(option1IsSelected){
+            valid1 = true;
+            outputLabel2.setText("");
+        } else {
+            outputLabel2.setText("Select an interval");
+        }
+        if(valid1 && group.getSelection() == null){
+            outputLabel3.setText("Choose beginning or end");
+        } else if (valid1 && group.getSelection() != null) {
+            valid2 = true;
+            outputLabel3.setText("");
+            if(option1.isSelected()){
+                selectedOption8 = option1.getText();
+            } else if (option2.isSelected()) {
+                selectedOption9 = option2.getText();
+            }
+        }
+        if(option2IsSelected){
+            valid3 = true;
+            outputLabel4.setText("");
+        } else {
+            outputLabel4.setText("Select an asset");
+        }
+        if(valid1 && valid2 && valid3){
+            isValidForDropDown = true;
+        }
+        if(isValidForDropDown && isValidForTextFields){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    /*boolean pressed = false;
-                if(group.getSelection() != null){
-                    outputLabel2.setVisible(false);
-                    pressed = true;
-                    if(option1.isSelected()){
-                        selectedOption8 = option1.getText();
-                    } else if (option2.isSelected()) {
-                        selectedOption9 = option2.getText();
-                    }
-                }*/
+
+
+
+
 
 
     @Override
