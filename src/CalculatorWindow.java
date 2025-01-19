@@ -20,6 +20,7 @@ public class CalculatorWindow implements ActionListener {
     JTextField textField1 = new JTextField();
     JLabel outputLabel = new JLabel();
     JLabel outputLabel1 = new JLabel();
+    JLabel outputLabel2 = new JLabel("select beginning or end");
     JComboBox<String> dropdown1;
     JComboBox<String> dropdown2;
     JComboBox<String> dropdown3;
@@ -27,7 +28,6 @@ public class CalculatorWindow implements ActionListener {
     JComboBox<String> dropdown5;
     JComboBox<String> dropdown6;
     JComboBox<String> dropdown7;
-    JComboBox<String> dropdown8;
     public boolean isValid = false;
     public boolean isValid1 = false;
     JButton resetButton = new JButton("reset");
@@ -35,6 +35,7 @@ public class CalculatorWindow implements ActionListener {
     JRadioButton option1 = new JRadioButton("beginning");
     JRadioButton option2 = new JRadioButton("end");
     ButtonGroup group = new ButtonGroup();
+    public String selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5, selectedOption6, selectedOption7, selectedOption8, selectedOption9;
 
     CalculatorWindow(){
         Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
@@ -75,6 +76,8 @@ public class CalculatorWindow implements ActionListener {
         textField1.setBounds(490, 330, 100, 20);
         frame.add(textField1);
 
+
+
         String[] timeInterval = {"Monthly", "Annually"};
         dropdown1 = new JComboBox<>(timeInterval);
         dropdown1.setToolTipText("Contribution Interval");
@@ -86,8 +89,8 @@ public class CalculatorWindow implements ActionListener {
         dropdown1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption = (String) dropdown1.getSelectedItem();
-                if(Objects.equals(selectedOption, "Monthly") || Objects.equals(selectedOption, "Annually")){
+                selectedOption1 = (String) dropdown1.getSelectedItem();
+                if(Objects.equals(selectedOption1, "Monthly") || Objects.equals(selectedOption1, "Annually")){
                     option1.setVisible(true);
                     option2.setVisible(true);
                 }
@@ -105,7 +108,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption2 = (String) dropdown2.getSelectedItem();
+                selectedOption2 = (String) dropdown2.getSelectedItem();
                 DropdownManager.setVisibility(selectedOption2, dropdown2, dropdown3, dropdown4, dropdown5, dropdown6, dropdown7);
             }
         });
@@ -122,7 +125,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption3 = (String) dropdown3.getSelectedItem();
+                selectedOption3 = (String) dropdown3.getSelectedItem();
 
             }
         });
@@ -139,7 +142,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption4 = (String) dropdown4.getSelectedItem();
+                selectedOption4 = (String) dropdown4.getSelectedItem();
 
             }
         });
@@ -156,7 +159,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption5 = (String) dropdown5.getSelectedItem();
+                selectedOption5 = (String) dropdown5.getSelectedItem();
 
             }
         });
@@ -173,7 +176,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption6 = (String) dropdown6.getSelectedItem();
+                selectedOption6 = (String) dropdown6.getSelectedItem();
 
             }
         });
@@ -190,8 +193,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedOption7 = (String) dropdown7.getSelectedItem();
-
+                selectedOption7 = (String) dropdown7.getSelectedItem();
             }
         });
 
@@ -253,6 +255,11 @@ public class CalculatorWindow implements ActionListener {
         outputLabel1.setForeground(Color.red);
         frame.add(outputLabel1);
 
+        outputLabel2.setBounds(620, 450, 500, 20);
+        outputLabel2.setForeground(Color.red);
+        outputLabel2.setVisible(false);
+        frame.add(outputLabel2);
+
 
         panel1.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel1.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -263,7 +270,16 @@ public class CalculatorWindow implements ActionListener {
         calc_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean isInputValid = true;
+                boolean isInputValid = true, pressed = false;
+                if(group.getSelection() != null){
+                    outputLabel2.setVisible(false);
+                    pressed = true;
+                    if(option1.isSelected()){
+                        selectedOption8 = option1.getText();
+                    } else if (option2.isSelected()) {
+                        selectedOption9 = option2.getText();
+                    }
+                }
 
                 String input = textField.getText();
                 if (input.isEmpty()) {
@@ -300,7 +316,7 @@ public class CalculatorWindow implements ActionListener {
                 }
 
 
-                if (isValid && isValid1 && isInputValid) {
+                if (isValid && isValid1 && isInputValid && pressed) {
                     frame.dispose();
                     ResultWindow resultWindow = new ResultWindow();
                 }
@@ -309,6 +325,8 @@ public class CalculatorWindow implements ActionListener {
 
 
     }
+
+
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == returnButton) {
