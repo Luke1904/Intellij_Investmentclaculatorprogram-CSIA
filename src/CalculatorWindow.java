@@ -28,8 +28,7 @@ public class CalculatorWindow implements ActionListener {
     JComboBox<String> dropdown5;
     JComboBox<String> dropdown6;
     JComboBox<String> dropdown7;
-    public boolean isValid = false;
-    public boolean isValid1 = false;
+    public boolean isValidTextField = false;
     JButton resetButton = new JButton("reset");
     JButton resetButton1 = new JButton("reset");
     JRadioButton option1 = new JRadioButton("beginning");
@@ -270,7 +269,53 @@ public class CalculatorWindow implements ActionListener {
         calc_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean isInputValid = true, pressed = false;
+                isValidTextField = validateTextField();
+                if(isValidTextField){
+                    frame.dispose();
+                    ResultWindow resultWindow = new ResultWindow();
+                }
+
+            }
+        });
+
+
+    }
+
+    public boolean validateTextField (){
+        boolean isInputValid = true, isValid = false, isValid1 = false;
+        String input = textField.getText();
+        if (input.isEmpty()) {
+            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input.matches("\\d+")) {
+            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            isValid = true;
+            textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel.setText("");
+        }
+
+        String input1 = textField1.getText();
+        if (input1.isEmpty()) {
+            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel1.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input1.matches("\\d+")) {
+            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel1.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            isValid1 = true;
+            textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel1.setText("");
+        }
+        return isValid && isValid1 && isInputValid;
+    }
+
+    /*boolean pressed = false;
                 if(group.getSelection() != null){
                     outputLabel2.setVisible(false);
                     pressed = true;
@@ -279,52 +324,7 @@ public class CalculatorWindow implements ActionListener {
                     } else if (option2.isSelected()) {
                         selectedOption9 = option2.getText();
                     }
-                }
-
-                String input = textField.getText();
-                if (input.isEmpty()) {
-                    isValid = false;
-                    textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                    outputLabel.setText("Input cannot be empty.");
-                    isInputValid = false;
-                } else if (!input.matches("\\d+")) {
-                    isValid = false;
-                    textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                    outputLabel.setText("Please enter a valid number.");
-                    isInputValid = false;
-                } else {
-                    isValid = true;
-                    textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                    outputLabel.setText("");
-                }
-
-                String input1 = textField1.getText();
-                if (input1.isEmpty()) {
-                    isValid1 = false;
-                    textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                    outputLabel1.setText("Input cannot be empty.");
-                    isInputValid = false;
-                } else if (!input1.matches("\\d+")) {
-                    isValid1 = false;
-                    textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                    outputLabel1.setText("Please enter a valid number.");
-                    isInputValid = false;
-                } else {
-                    isValid1 = true;
-                    textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                    outputLabel1.setText("");
-                }
-
-
-                if (isValid && isValid1 && isInputValid && pressed) {
-                    frame.dispose();
-                    ResultWindow resultWindow = new ResultWindow();
-                }
-            }
-        });
-
-
-    }
+                }*/
 
 
     @Override
