@@ -6,59 +6,62 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
-    JFrame frame = new JFrame("Investment Calculator");
-    JButton calc_Button = new JButton("Calculate");
-    JButton returnButton = new JButton();
-    JLabel label1 = new JLabel("Investment Calculator");
-    JLabel label2 = new JLabel("Starting Amount");
-    JLabel label3 = new JLabel("Contribution Amount");
-    JLabel label4 = new JLabel("Choose Contribution Interval");
-    JLabel label5 = new JLabel("Choose an Asset");
-    JPanel panel1 = new JPanel();
-    public ImageIcon image = new ImageIcon("X:\\Applications\\IntelliJ IDEA Community Edition 2023.3.5\\Images\\p_5dfc3382-d5f7-11ee-ba1f-00163e012526_wm.png");
-    JTextField textField = new JTextField();
-    JTextField textField1 = new JTextField();
-    JLabel outputLabel = new JLabel();
-    JLabel outputLabel1 = new JLabel();
-    JLabel outputLabel2 = new JLabel();
-    JLabel outputLabel3 = new JLabel();
-    JLabel outputLabel4 = new JLabel();
-    JComboBox<String> dropdown1;
-    JComboBox<String> dropdown2;
-    JComboBox<String> dropdown3;
-    JComboBox<String> dropdown4;
-    JComboBox<String> dropdown5;
-    JComboBox<String> dropdown6;
-    JComboBox<String> dropdown7;
-    public boolean option1IsSelected = false;
-    public boolean option2IsSelected = false;
-    JButton resetButton = new JButton("reset");
-    JButton resetButton1 = new JButton("reset");
-    JRadioButton option1 = new JRadioButton("beginning");
-    JRadioButton option2 = new JRadioButton("end");
-    ButtonGroup group = new ButtonGroup();
-    public int startingAmount = 0, contributionAmount = 0;
-    public String selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5, selectedOption6, selectedOption7, selectedOption8, selectedOption9;
 
-    CalculatorWindow(){
+    public JFrame frame = new JFrame("Investment Calculator");
+    public JButton resetButton = new JButton("reset"),
+            resetButton1 = new JButton("reset"),
+            calc_Button = new JButton("Calculate"),
+            returnButton = new JButton();
+    public JRadioButton option1 = new JRadioButton("beginning"), option2 = new JRadioButton("end");
+    public ButtonGroup group = new ButtonGroup();
+    public JLabel label1 = new JLabel("Investment Calculator"),
+            label2 = new JLabel("Starting Amount"),
+            label3 = new JLabel("Contribution Amount"),
+            label4 = new JLabel("Choose Contribution Interval"),
+            label5 = new JLabel("Choose an Asset"),
+            outputLabel = new JLabel(),
+            outputLabel1 = new JLabel(),
+            outputLabel2 = new JLabel(),
+            outputLabel3 = new JLabel(),
+            outputLabel4 = new JLabel();
+    public JPanel panel1 = new JPanel();
+    public JTextField textField = new JTextField(), textField1 = new JTextField();
+    public JComboBox<String> dropdown1,
+            dropdown2,
+            dropdown3,
+            dropdown4,
+            dropdown5,
+            dropdown6,
+            dropdown7;
+    public boolean option1IsSelected = false, option2IsSelected = false;
+    public int startingAmount, contributionAmount;
+    public String selectedOption1,
+            selectedOption2,
+            selectedOption3,
+            selectedOption4,
+            selectedOption5,
+            selectedOption6,
+            selectedOption7,
+            selectedOption8,
+            selectedOption9;
+
+    public CalculatorWindow(){
+
         Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
+
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
-        frame.setIconImage(image.getImage());
         frame.getContentPane().setBackground(new Color(203, 203, 203));
 
         option1.setBounds(490, 450, 100, 20);
         option1.setFocusable(false);
         option2.setBounds(600, 450, 100, 20);
         option2.setFocusable(false);
-
         group.add(option1);
         group.add(option2);
-
         frame.add(option1);
         frame.add(option2);
-
         option1.setVisible(false);
         option2.setVisible(false);
 
@@ -72,16 +75,13 @@ public class CalculatorWindow implements ActionListener {
         resetButton1.setFocusable(false);
         resetButton1.setVisible(true);
 
-
         textField.setBounds(490, 265, 100, 20);
         frame.add(textField);
 
         textField1.setBounds(490, 330, 100, 20);
         frame.add(textField1);
 
-
-
-        String[] timeInterval = {"Monthly", "Annually"};
+        String[] timeInterval = {"monthly", "annually"};
         dropdown1 = new JComboBox<>(timeInterval);
         dropdown1.setToolTipText("Contribution Interval");
         dropdown1.setBounds(489, 400, 200, 30);
@@ -94,7 +94,7 @@ public class CalculatorWindow implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 option1IsSelected = true;
                 selectedOption1 = (String) dropdown1.getSelectedItem();
-                if(Objects.equals(selectedOption1, "Monthly") || Objects.equals(selectedOption1, "Annually")){
+                if(Objects.equals(selectedOption1, "monthly") || Objects.equals(selectedOption1, "annually")){
                     option1.setVisible(true);
                     option2.setVisible(true);
                 }
@@ -114,7 +114,13 @@ public class CalculatorWindow implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 option2IsSelected = true;
                 selectedOption2 = (String) dropdown2.getSelectedItem();
-                DropdownManager.setVisibility(selectedOption2, dropdown2, dropdown3, dropdown4, dropdown5, dropdown6, dropdown7);
+                DropdownManager.setVisibility(selectedOption2,
+                        dropdown2,
+                        dropdown3,
+                        dropdown4,
+                        dropdown5,
+                        dropdown6,
+                        dropdown7);
             }
         });
 
@@ -131,7 +137,6 @@ public class CalculatorWindow implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedOption3 = (String) dropdown3.getSelectedItem();
-
             }
         });
 
@@ -148,7 +153,6 @@ public class CalculatorWindow implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedOption4 = (String) dropdown4.getSelectedItem();
-
             }
         });
 
@@ -165,7 +169,6 @@ public class CalculatorWindow implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedOption5 = (String) dropdown5.getSelectedItem();
-
             }
         });
 
@@ -182,7 +185,6 @@ public class CalculatorWindow implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedOption6 = (String) dropdown6.getSelectedItem();
-
             }
         });
 
@@ -283,6 +285,14 @@ public class CalculatorWindow implements ActionListener {
 
         frame.setVisible(true);
 
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    frame.dispose();
+                    MainMenu menu = new MainMenu();
+            }
+        });
+
         calc_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -295,6 +305,7 @@ public class CalculatorWindow implements ActionListener {
 
 
     }
+
 
     public boolean validateTextFieldsAndDropDowns (){
         boolean isInputValid = true, isValid = false, isValid1 = false, isValidForTextFields = false;
@@ -367,18 +378,8 @@ public class CalculatorWindow implements ActionListener {
         }
     }
 
-
-
-
-
-
-
     @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == returnButton) {
-            frame.dispose();
-            MainMenu menu = new MainMenu();
-        }
+    public void actionPerformed(ActionEvent e) {
     }
 }
 
