@@ -84,15 +84,12 @@ public class CalculatorWindow implements ActionListener {
         dropdown1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown1.setFocusable(false);
         frame.add(dropdown1);
-        dropdown1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                option1IsSelected = true;
-                selectedOption1 = (String) dropdown1.getSelectedItem();
-                if(Objects.equals(selectedOption1, "monthly") || Objects.equals(selectedOption1, "annually")){
-                    option1.setVisible(true);
-                    option2.setVisible(true);
-                }
+        dropdown1.addActionListener(e -> {
+            option1IsSelected = true;
+            selectedOption1 = (String) dropdown1.getSelectedItem();
+            if(Objects.equals(selectedOption1, "monthly") || Objects.equals(selectedOption1, "annually")){
+                option1.setVisible(true);
+                option2.setVisible(true);
             }
         });
 
@@ -104,19 +101,16 @@ public class CalculatorWindow implements ActionListener {
         dropdown2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown2.setFocusable(false);
         frame.add(dropdown2);
-        dropdown2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                option2IsSelected = true;
-                selectedOption2 = (String) dropdown2.getSelectedItem();
-                DropdownManager.setVisibility(selectedOption2,
-                        dropdown2,
-                        dropdown3,
-                        dropdown4,
-                        dropdown5,
-                        dropdown6,
-                        dropdown7);
-            }
+        dropdown2.addActionListener(e -> {
+            option2IsSelected = true;
+            selectedOption2 = (String) dropdown2.getSelectedItem();
+            DropdownManager.setVisibility(selectedOption2,
+                    dropdown2,
+                    dropdown3,
+                    dropdown4,
+                    dropdown5,
+                    dropdown6,
+                    dropdown7);
         });
 
         String[] stockOptions = {"NASDAQ100", "S&P500", "DJ30", "Nikkei225"};
@@ -128,12 +122,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown3.setFocusable(false);
         frame.add(dropdown3);
-        dropdown3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedOption3 = (String) dropdown3.getSelectedItem();
-            }
-        });
+        dropdown3.addActionListener(e -> selectedOption3 = (String) dropdown3.getSelectedItem());
 
         String[] bondOptions = {"Vanguard total bond market ETF", "J.P. Morgan limited duration bond ETF", "Vanguard Short-term Bond Etf", "SPDR Portfolio Short Term Treasury ETF"};
         dropdown4 = new JComboBox<>(bondOptions);
@@ -144,12 +133,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown4.setFocusable(false);
         frame.add(dropdown4);
-        dropdown4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedOption3 = (String) dropdown4.getSelectedItem();
-            }
-        });
+        dropdown4.addActionListener(e -> selectedOption3 = (String) dropdown4.getSelectedItem());
 
         String[] realEstateOptions = {"Prologis Inc.", "American Tower Corp.", "Digital Realty Trust Inc.", "AvalonBay Communities Inc."};
         dropdown5 = new JComboBox<>(realEstateOptions);
@@ -160,12 +144,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown5.setFocusable(false);
         frame.add(dropdown5);
-        dropdown5.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedOption3 = (String) dropdown5.getSelectedItem();
-            }
-        });
+        dropdown5.addActionListener(e -> selectedOption3 = (String) dropdown5.getSelectedItem());
 
         String[] cryptoCurrencyOptions = {"Bitcoin", "Ethereum", "Tether", "Solana"};
         dropdown6 = new JComboBox<>(cryptoCurrencyOptions);
@@ -176,12 +155,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown6.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown6.setFocusable(false);
         frame.add(dropdown6);
-        dropdown6.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedOption3 = (String) dropdown6.getSelectedItem();
-            }
-        });
+        dropdown6.addActionListener(e -> selectedOption3 = (String) dropdown6.getSelectedItem());
 
         String[] commoditiesOptions = {"Gold", "Natural Gas", "Copper", "Silver"};
         dropdown7 = new JComboBox<>(commoditiesOptions);
@@ -192,35 +166,24 @@ public class CalculatorWindow implements ActionListener {
         dropdown7.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown7.setFocusable(false);
         frame.add(dropdown7);
-        dropdown7.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedOption3 = (String) dropdown7.getSelectedItem();
-            }
+        dropdown7.addActionListener(e -> selectedOption3 = (String) dropdown7.getSelectedItem());
+
+        resetButton.addActionListener(e -> {
+                outputLabel3.setText("");
+                option1IsSelected = false;
+                group.clearSelection();
+                option1.setVisible(false);
+                option2.setVisible(false);
         });
 
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    outputLabel3.setText("");
-                    option1IsSelected = false;
-                    group.clearSelection();
-                    option1.setVisible(false);
-                    option2.setVisible(false);
-            }
-        });
-
-        resetButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                option2IsSelected = false;
-                dropdown3.setVisible(false);
-                dropdown4.setVisible(false);
-                dropdown5.setVisible(false);
-                dropdown6.setVisible(false);
-                dropdown7.setVisible(false);
-                dropdown2.setVisible(true);
-            }
+        resetButton1.addActionListener(e -> {
+            option2IsSelected = false;
+            dropdown3.setVisible(false);
+            dropdown4.setVisible(false);
+            dropdown5.setVisible(false);
+            dropdown6.setVisible(false);
+            dropdown7.setVisible(false);
+            dropdown2.setVisible(true);
         });
 
         label1.setBounds(ss.width / 2 - 125, 125, 300, 40);
@@ -280,27 +243,21 @@ public class CalculatorWindow implements ActionListener {
 
         frame.setVisible(true);
 
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    frame.dispose();
-                    MainMenu menu = new MainMenu();
-            }
+        returnButton.addActionListener(e -> {
+                frame.dispose();
+                MainMenu menu = new MainMenu();
         });
 
-        calc_Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(validateTextFieldsAndDropDowns()){
-                    frame.dispose();
-                    GBMCalculated calc = new GBMCalculated(startingAmount,
-                            contributionAmount,
-                            selectedOption3,
-                            selectedOption1,
-                            selectedOption4);
-                    System.out.println(calc.calculateFinalInvestment(2.1, 3.1));
-                    ResultWindow resultWindow = new ResultWindow();
-                }
+        calc_Button.addActionListener(e -> {
+            if(validateTextFieldsAndDropDowns()){
+                frame.dispose();
+                GBMCalculated calc = new GBMCalculated(startingAmount,
+                        contributionAmount,
+                        selectedOption3,
+                        selectedOption1,
+                        selectedOption4);
+                System.out.println(calc.calculateFinalInvestment(2.1, 3.1));
+                ResultWindow resultWindow = new ResultWindow();
             }
         });
 

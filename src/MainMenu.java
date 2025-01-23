@@ -46,23 +46,17 @@ public class MainMenu implements ActionListener{
         panel.setBackground(Color.LIGHT_GRAY);
         panel.setVisible(true);
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == button1) { // Check if the source of the event is button1
-                    frame.dispose(); // Dispose the current frame
-                    CalculatorWindow calculate = new CalculatorWindow(); // Open the CalculatorWindow
-                }
+        button1.addActionListener(e -> {
+            if (e.getSource() == button1) { // Check if the source of the event is button1
+                frame.dispose(); // Dispose the current frame
+                CalculatorWindow calculate = new CalculatorWindow(); // Open the CalculatorWindow
             }
         });
 
-        button2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == button2) { // Check if the source of the event is button2
-                    frame.dispose(); // Dispose the current frame
-                    SavesMenu saves = new SavesMenu(); // Open the SavesMenu
-                }
+        button2.addActionListener(e -> {
+            if (e.getSource() == button2) { // Check if the source of the event is button2
+                frame.dispose(); // Dispose the current frame
+                SavesMenu saves = new SavesMenu(); // Open the SavesMenu
             }
         });
 
