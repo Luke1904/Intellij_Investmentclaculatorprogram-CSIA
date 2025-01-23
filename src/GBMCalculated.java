@@ -9,29 +9,21 @@ import java.util.concurrent.TimeUnit;
 public class GBMCalculated {
     public int startingAmount;
     public int contributionAmount;
-    public String selectedOption3; // Stock
-    public String selectedOption4; // Bond
-    public String selectedOption5; // Real Estate
-    public String selectedOption6; // Cryptocurrency
-    public String selectedOption7; // Commodity
+    public String selectedOption3; // Stock// Commodity
     public String selectedOption1; // Contribution frequency (monthly/annually)
-    public String selectedOption8; // Contribute at the beginning
-    public String selectedOption9;// Contribute at the end
+    public String selectedOption4;
 
     // Constructor
-    public GBMCalculated(int startingAmount, int contributionAmount, String selectedOption3, String selectedOption4,
-                         String selectedOption5, String selectedOption6, String selectedOption7, String selectedOption1,
-                         String selectedOption8, String selectedOption9) {
+    public GBMCalculated(int startingAmount,
+                         int contributionAmount,
+                         String selectedOption3,
+                         String selectedOption1,
+                         String selectedOption4) {
         this.startingAmount = startingAmount;
         this.contributionAmount = contributionAmount;
         this.selectedOption3 = selectedOption3;
-        this.selectedOption4 = selectedOption4;
-        this.selectedOption5 = selectedOption5;
-        this.selectedOption6 = selectedOption6;
-        this.selectedOption7 = selectedOption7;
         this.selectedOption1 = selectedOption1;
-        this.selectedOption8 = selectedOption8;
-        this.selectedOption9 = selectedOption9;
+        this.selectedOption4 = selectedOption4;
 
         scheduleDailyUpdates();
     }
@@ -47,7 +39,7 @@ public class GBMCalculated {
             double randomShock = Math.random() * volatility * Math.sqrt(dt);
             investment *= Math.exp((drift - 0.5 * volatility * volatility) * dt + randomShock);
 
-            if (this.selectedOption8.equalsIgnoreCase("beginning") || this.selectedOption9.equalsIgnoreCase("end")) {
+            if (this.selectedOption4.equalsIgnoreCase("beginning") || this.selectedOption4.equalsIgnoreCase("end")) {
                 investment += this.contributionAmount;
             }
         }
@@ -57,8 +49,8 @@ public class GBMCalculated {
 
     // Calculate ROI
     public double calculateROI(double finalValue) {
-        double totalContributions = contributionAmount * (selectedOption1.equalsIgnoreCase("monthly") ? 12 : 1) * 10;
-        return ((finalValue - startingAmount - totalContributions) / (startingAmount + totalContributions)) * 100;
+        double totalContributions = this.contributionAmount * (this.selectedOption1.equalsIgnoreCase("monthly") ? 12 : 1) * 10;
+        return ((finalValue - this.startingAmount - totalContributions) / (this.startingAmount + totalContributions)) * 100;
     }
 
     // Total dividends (dummy calculation, modify as needed)
@@ -83,8 +75,8 @@ public class GBMCalculated {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
             System.out.println("Updating investment data...");
-            BigDecimal stockPrice = fetchStockPrice(selectedOption3); // Example: update based on selected stock
-            System.out.println("Current price of " + selectedOption3 + ": " + stockPrice);
+            BigDecimal stockPrice = fetchStockPrice(this.selectedOption3); // Example: update based on selected stock
+            System.out.println("Current price of " + this.selectedOption3 + ": " + stockPrice);
 
             double drift = 0.05; // Assume 5% average annual return
             double volatility = 0.2; // Assume 20% volatility

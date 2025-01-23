@@ -38,12 +38,7 @@ public class CalculatorWindow implements ActionListener {
     public String selectedOption1,
             selectedOption2,
             selectedOption3,
-            selectedOption4,
-            selectedOption5,
-            selectedOption6,
-            selectedOption7,
-            selectedOption8,
-            selectedOption9;
+            selectedOption4;
 
     public CalculatorWindow(){
 
@@ -152,7 +147,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedOption4 = (String) dropdown4.getSelectedItem();
+                selectedOption3 = (String) dropdown4.getSelectedItem();
             }
         });
 
@@ -168,7 +163,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedOption5 = (String) dropdown5.getSelectedItem();
+                selectedOption3 = (String) dropdown5.getSelectedItem();
             }
         });
 
@@ -184,7 +179,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedOption6 = (String) dropdown6.getSelectedItem();
+                selectedOption3 = (String) dropdown6.getSelectedItem();
             }
         });
 
@@ -200,7 +195,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedOption7 = (String) dropdown7.getSelectedItem();
+                selectedOption3 = (String) dropdown7.getSelectedItem();
             }
         });
 
@@ -298,6 +293,12 @@ public class CalculatorWindow implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 if(validateTextFieldsAndDropDowns()){
                     frame.dispose();
+                    GBMCalculated calc = new GBMCalculated(startingAmount,
+                            contributionAmount,
+                            selectedOption3,
+                            selectedOption1,
+                            selectedOption4);
+                    System.out.println(calc.calculateFinalInvestment(2.1, 3.1));
                     ResultWindow resultWindow = new ResultWindow();
                 }
             }
@@ -356,9 +357,9 @@ public class CalculatorWindow implements ActionListener {
             valid2 = true;
             outputLabel3.setText("");
             if(option1.isSelected()){
-                selectedOption8 = option1.getText();
+                selectedOption4 = option1.getText();
             } else if (option2.isSelected()) {
-                selectedOption9 = option2.getText();
+                selectedOption4 = option2.getText();
             }
         }
         if(option2IsSelected){
