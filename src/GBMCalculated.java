@@ -1,7 +1,6 @@
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
-import java.math.BigDecimal;
+
+/*import java.math.BigDecimal;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -86,3 +85,4 @@ public class GBMCalculated {
         }, 0, 24, TimeUnit.HOURS);
     }
 }
+*/

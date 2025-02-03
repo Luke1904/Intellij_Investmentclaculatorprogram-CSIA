@@ -3,7 +3,6 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
@@ -67,6 +66,11 @@ public class CalculatorWindow implements ActionListener {
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
+        resetButton1.setBounds(700, 514, 70, 30);
+        resetButton1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        frame.add(resetButton1);
+        resetButton1.setFocusable(false);
+        resetButton1.setVisible(true);
 
 
         textField.setBounds(490, 265, 100, 20);
@@ -205,9 +209,6 @@ public class CalculatorWindow implements ActionListener {
         label5.setBounds(489, 480, 200, 30);
         frame.add(label5);
 
-        label6.setBounds(489, 600, 220, 30);
-        frame.add(label6);
-
         calc_Button.setBounds(489, 704, 100, 30);
         calc_Button.addActionListener(this);
         calc_Button.setFocusable(false);
@@ -258,12 +259,13 @@ public class CalculatorWindow implements ActionListener {
         calc_Button.addActionListener(e -> {
             if(validateTextFieldsAndDropDowns()){
                 frame.dispose();
-                GBMCalculated calc = new GBMCalculated(startingAmount,
+                /*GBMCalculated calc = new GBMCalculated(startingAmount,
                         contributionAmount,
                         selectedOption3,
                         selectedOption1,
                         selectedOption4);
                 System.out.println(calc.calculateFinalInvestment(2.1, 3.1));
+                */
                 ResultWindow resultWindow = new ResultWindow();
             }
         });
@@ -346,20 +348,6 @@ public class CalculatorWindow implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    }
-
-    public void VerifyValidity(){
-        boolean moveToNextWindow = true;
-        for(int i = 0; i < 3; i++){
-            if(valid[i] == false){
-                moveToNextWindow = false;
-                break;
-            }
-        }
-        if(moveToNextWindow == true) {
-            frame.dispose();
-            ResultWindow result = new ResultWindow();
-        }
     }
 }
 
