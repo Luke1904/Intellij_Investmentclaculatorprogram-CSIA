@@ -3,9 +3,11 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
+
 
     public JFrame frame = new JFrame("Investment Calculator");
     public JButton resetButton = new JButton("reset"),
@@ -41,7 +43,6 @@ public class CalculatorWindow implements ActionListener {
             selectedOption4;
 
     public CalculatorWindow(){
-
         Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
 
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -61,20 +62,20 @@ public class CalculatorWindow implements ActionListener {
         option2.setVisible(false);
 
         resetButton.setBounds(700, 400, 70, 30);
+        resetButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(resetButton);
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
-        resetButton1.setBounds(700, 514, 70, 30);
-        frame.add(resetButton1);
-        resetButton1.setFocusable(false);
-        resetButton1.setVisible(true);
+
 
         textField.setBounds(490, 265, 100, 20);
         frame.add(textField);
 
         textField1.setBounds(490, 330, 100, 20);
+        textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField1);
+
 
         String[] timeInterval = {"monthly", "annually"};
         dropdown1 = new JComboBox<>(timeInterval);
@@ -101,6 +102,7 @@ public class CalculatorWindow implements ActionListener {
         dropdown2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown2.setFocusable(false);
         frame.add(dropdown2);
+
         dropdown2.addActionListener(e -> {
             option2IsSelected = true;
             selectedOption2 = (String) dropdown2.getSelectedItem();
@@ -184,6 +186,7 @@ public class CalculatorWindow implements ActionListener {
             dropdown6.setVisible(false);
             dropdown7.setVisible(false);
             dropdown2.setVisible(true);
+
         });
 
         label1.setBounds(ss.width / 2 - 125, 125, 300, 40);
@@ -201,6 +204,9 @@ public class CalculatorWindow implements ActionListener {
 
         label5.setBounds(489, 480, 200, 30);
         frame.add(label5);
+
+        label6.setBounds(489, 600, 220, 30);
+        frame.add(label6);
 
         calc_Button.setBounds(489, 704, 100, 30);
         calc_Button.addActionListener(this);
@@ -220,6 +226,7 @@ public class CalculatorWindow implements ActionListener {
         outputLabel.setForeground(Color.red);
         frame.add(outputLabel);
 
+
         outputLabel1.setBounds(604, 329, 500, 20);
         outputLabel1.setForeground(Color.red);
         frame.add(outputLabel1);
@@ -236,12 +243,12 @@ public class CalculatorWindow implements ActionListener {
         outputLabel4.setForeground(Color.RED);
         frame.add(outputLabel4);
 
-
         panel1.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel1.setBorder(BorderFactory.createLineBorder(Color.black));
         frame.add(panel1);
 
         frame.setVisible(true);
+
 
         returnButton.addActionListener(e -> {
                 frame.dispose();
@@ -297,6 +304,7 @@ public class CalculatorWindow implements ActionListener {
             isValid1 = true;
             textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             outputLabel1.setText("");
+
         }
         if(isValid && isValid1 && isInputValid){
             isValidForTextFields = true;
@@ -338,6 +346,20 @@ public class CalculatorWindow implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    }
+
+    public void VerifyValidity(){
+        boolean moveToNextWindow = true;
+        for(int i = 0; i < 3; i++){
+            if(valid[i] == false){
+                moveToNextWindow = false;
+                break;
+            }
+        }
+        if(moveToNextWindow == true) {
+            frame.dispose();
+            ResultWindow result = new ResultWindow();
+        }
     }
 }
 

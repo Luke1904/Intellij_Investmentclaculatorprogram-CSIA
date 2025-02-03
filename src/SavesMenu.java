@@ -10,6 +10,7 @@ public class SavesMenu extends JFrame implements ActionListener {
     JFrame frame = new JFrame("Investment calculator");
     JButton button1 = new JButton("Create a save"), button2 = new JButton("Open a save");
     JPanel panel = new JPanel();
+
     JLabel label = new JLabel("Saves Menu");
 
 

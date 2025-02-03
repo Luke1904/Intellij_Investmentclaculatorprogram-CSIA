@@ -7,6 +7,7 @@ public class ResultWindow {
 
     ResultWindow(){
 
+
         frame.setLayout(null);
         frame.setFocusable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,6 +18,7 @@ public class ResultWindow {
 
 
     }
+
 
 
 }
