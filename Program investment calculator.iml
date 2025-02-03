@@ -7,25 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/JARs/jcommon-1.0.8/jcommon-1.0.8/jcommon-1.0.8-junit.jar!/" />
-          <root url="jar://$MODULE_DIR$/JARs/jcommon-1.0.8/jcommon-1.0.8/jcommon-1.0.8.jar!/" />
-          <root url="jar://$MODULE_DIR$/JARs/jcommon-1.0.8/jcommon-1.0.8/jcommon-xml-1.0.8.jar!/" />
-          <root url="jar://$MODULE_DIR$/JARs/jfreechart-1.0.19/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar!/" />
-          <root url="file://$MODULE_DIR$" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/JARs/jcommon-1.0.8/jcommon-1.0.8/source" />
-          <root url="file://$MODULE_DIR$/JARs/jfreechart-1.0.19/jfreechart-1.0.19/experimental" />
-          <root url="file://$MODULE_DIR$/JARs/jfreechart-1.0.19/jfreechart-1.0.19/source" />
-          <root url="file://$MODULE_DIR$/JARs/jfreechart-1.0.19/jfreechart-1.0.19/swt" />
-          <root url="file://$MODULE_DIR$/JARs/jfreechart-1.0.19/jfreechart-1.0.19/tests" />
-          <root url="file://$MODULE_DIR$/src" />
-        </SOURCES>
-      </library>
-    </orderEntry>
+    <orderEntry type="library" exported="" name="YahooFinanceAPI-3.5.0" level="project" />
   </component>
 </module>
