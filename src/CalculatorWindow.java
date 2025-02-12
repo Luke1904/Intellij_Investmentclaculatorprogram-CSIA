@@ -10,38 +10,36 @@ public class CalculatorWindow implements ActionListener {
 
     public JFrame frame = new JFrame("Investment Calculator");
     public JButton resetButton = new JButton("reset"),
-            resetButton1 = new JButton("reset"),
             calc_Button = new JButton("Calculate"),
             returnButton = new JButton();
-    public JRadioButton option1 = new JRadioButton("beginning"), option2 = new JRadioButton("end");
-    public ButtonGroup group = new ButtonGroup();
+    public JRadioButton option1 = new JRadioButton("beginning"), option2 = new JRadioButton("end"), option3 = new JRadioButton("month"), option4 = new JRadioButton("year");
+    public ButtonGroup group = new ButtonGroup(), group1 = new ButtonGroup();
     public JLabel label1 = new JLabel("Investment Calculator"),
             label2 = new JLabel("Starting Amount"),
             label3 = new JLabel("Contribution Amount"),
-            label4 = new JLabel("Choose Contribution Interval"),
-            label5 = new JLabel("Choose an Asset"),
+            label4 = new JLabel("Choose Compound Rate"),
+            label5 = new JLabel("Choose Return Rate"),
+            label6 = new JLabel("Choose when to contribute"),
+            label7 = new JLabel("Choose Investment Period"),
             outputLabel = new JLabel(),
             outputLabel1 = new JLabel(),
             outputLabel2 = new JLabel(),
             outputLabel3 = new JLabel(),
-            outputLabel4 = new JLabel();
+            outputLabel4 = new JLabel(),
+            outputLabel5 = new JLabel(),
+            outputLabel6 = new JLabel();
     public JPanel panel1 = new JPanel();
-    public JTextField textField = new JTextField(), textField1 = new JTextField();
-    public JComboBox<String> dropdown1,
-            dropdown2,
-            dropdown3,
-            dropdown4,
-            dropdown5,
-            dropdown6,
-            dropdown7;
-    public boolean option1IsSelected = false, option2IsSelected = false;
-    public int startingAmount, contributionAmount;
-    public String selectedOption1,
-            selectedOption2,
-            selectedOption3,
-            selectedOption4;
+    public JTextField textField = new JTextField(),
+            textField1 = new JTextField(),
+            textField2 = new JTextField(),
+            textField3 = new JTextField();
+    public JComboBox<String> dropdown1;
+    public boolean option1IsSelected = false;
+    public double startingAmount, contributionAmount, returnRate, investmentInterval;
+    public String selectedOption1, selectedOption2, selectedOption3;
+    public double[] values;
 
-    public CalculatorWindow(){
+    public CalculatorWindow() {
         Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
 
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -49,9 +47,9 @@ public class CalculatorWindow implements ActionListener {
         frame.setLayout(null);
         frame.getContentPane().setBackground(new Color(203, 203, 203));
 
-        option1.setBounds(490, 450, 100, 20);
+        option1.setBounds(490, 590, 100, 20);
         option1.setFocusable(false);
-        option2.setBounds(600, 450, 100, 20);
+        option2.setBounds(600, 590, 100, 20);
         option2.setFocusable(false);
         group.add(option1);
         group.add(option2);
@@ -60,31 +58,47 @@ public class CalculatorWindow implements ActionListener {
         option1.setVisible(false);
         option2.setVisible(false);
 
-        resetButton.setBounds(700, 400, 70, 30);
+        option3.setBounds(490, 630, 100, 20);
+        option3.setFocusable(false);
+        option4.setBounds(600, 630, 100, 20);
+        option4.setFocusable(false);
+        group1.add(option3);
+        group1.add(option4);
+        frame.add(option3);
+        frame.add(option4);
+        option3.setVisible(false);
+        option4.setVisible(false);
+
+        label6.setBounds(490, 550, 200, 30);
+        label6.setVisible(false);
+        frame.add(label6);
+
+        resetButton.setBounds(700, 514, 70, 30);
         resetButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(resetButton);
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
-        resetButton1.setBounds(700, 514, 70, 30);
-        resetButton1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        frame.add(resetButton1);
-        resetButton1.setFocusable(false);
-        resetButton1.setVisible(true);
-
-
-        textField.setBounds(490, 265, 100, 20);
+        textField.setBounds(490, 240, 100, 20);
+        textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField);
 
-        textField1.setBounds(490, 330, 100, 20);
+        textField1.setBounds(490, 310, 100, 20);
         textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField1);
 
+        textField2.setBounds(490, 380, 100, 20);
+        textField2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        frame.add(textField2);
 
-        String[] timeInterval = {"monthly", "annually"};
+        textField3.setBounds(490, 450, 100, 20);
+        textField3.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        frame.add(textField3);
+
+        String[] timeInterval = {"monthly", "quarterly", "semi-annually", "annually"};
         dropdown1 = new JComboBox<>(timeInterval);
-        dropdown1.setToolTipText("Contribution Interval");
-        dropdown1.setBounds(489, 400, 200, 30);
+        dropdown1.setToolTipText("Compound Rate");
+        dropdown1.setBounds(489, 514, 200, 30);
         dropdown1.setBackground(new Color(203, 203, 203));
         dropdown1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         dropdown1.setFocusable(false);
@@ -92,122 +106,46 @@ public class CalculatorWindow implements ActionListener {
         dropdown1.addActionListener(e -> {
             option1IsSelected = true;
             selectedOption1 = (String) dropdown1.getSelectedItem();
-            if(Objects.equals(selectedOption1, "monthly") || Objects.equals(selectedOption1, "annually")){
+            if (Objects.equals(selectedOption1, "monthly") || Objects.equals(selectedOption1, "quarterly") || Objects.equals(selectedOption1, "semi-annually") || Objects.equals(selectedOption1, "annually")) {
+                label6.setVisible(true);
                 option1.setVisible(true);
                 option2.setVisible(true);
+                option3.setVisible(true);
+                option4.setVisible(true);
             }
         });
 
-        String[] investmentOptions = {"Stocks", "Bonds", "Real Estate", "Cryptocurrency", "Commodities"};
-        dropdown2 = new JComboBox<>(investmentOptions);
-        dropdown2.setToolTipText("Choose asset");
-        dropdown2.setBounds(489, 514, 200, 30);
-        dropdown2.setBackground(new Color(203, 203, 203));
-        dropdown2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        dropdown2.setFocusable(false);
-        frame.add(dropdown2);
-
-        dropdown2.addActionListener(e -> {
-            option2IsSelected = true;
-            selectedOption2 = (String) dropdown2.getSelectedItem();
-            DropdownManager.setVisibility(selectedOption2,
-                    dropdown2,
-                    dropdown3,
-                    dropdown4,
-                    dropdown5,
-                    dropdown6,
-                    dropdown7);
-        });
-
-        String[] stockOptions = {"NASDAQ100", "S&P500", "DJ30", "Nikkei225"};
-        dropdown3 = new JComboBox<>(stockOptions);
-        dropdown3.setToolTipText("Select stock");
-        dropdown3.setVisible(false);
-        dropdown3.setBounds(489, 514, 200, 30);
-        dropdown3.setBackground(new Color(203, 203, 203));
-        dropdown3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        dropdown3.setFocusable(false);
-        frame.add(dropdown3);
-        dropdown3.addActionListener(e -> selectedOption3 = (String) dropdown3.getSelectedItem());
-
-        String[] bondOptions = {"Vanguard total bond market ETF", "J.P. Morgan limited duration bond ETF", "Vanguard Short-term Bond Etf", "SPDR Portfolio Short Term Treasury ETF"};
-        dropdown4 = new JComboBox<>(bondOptions);
-        dropdown4.setToolTipText("Select bond");
-        dropdown4.setVisible(false);
-        dropdown4.setBounds(489, 514, 200, 30);
-        dropdown4.setBackground(new Color(203, 203, 203));
-        dropdown4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        dropdown4.setFocusable(false);
-        frame.add(dropdown4);
-        dropdown4.addActionListener(e -> selectedOption3 = (String) dropdown4.getSelectedItem());
-
-        String[] realEstateOptions = {"Prologis Inc.", "American Tower Corp.", "Digital Realty Trust Inc.", "AvalonBay Communities Inc."};
-        dropdown5 = new JComboBox<>(realEstateOptions);
-        dropdown5.setToolTipText("Select real estate");
-        dropdown5.setVisible(false);
-        dropdown5.setBounds(489, 514, 200, 30);
-        dropdown5.setBackground(new Color(203, 203, 203));
-        dropdown5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        dropdown5.setFocusable(false);
-        frame.add(dropdown5);
-        dropdown5.addActionListener(e -> selectedOption3 = (String) dropdown5.getSelectedItem());
-
-        String[] cryptoCurrencyOptions = {"Bitcoin", "Ethereum", "Tether", "Solana"};
-        dropdown6 = new JComboBox<>(cryptoCurrencyOptions);
-        dropdown6.setToolTipText("Select cryptocurrency");
-        dropdown6.setVisible(false);
-        dropdown6.setBounds(489, 514, 200, 30);
-        dropdown6.setBackground(new Color(203, 203, 203));
-        dropdown6.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        dropdown6.setFocusable(false);
-        frame.add(dropdown6);
-        dropdown6.addActionListener(e -> selectedOption3 = (String) dropdown6.getSelectedItem());
-
-        String[] commoditiesOptions = {"Gold", "Natural Gas", "Copper", "Silver"};
-        dropdown7 = new JComboBox<>(commoditiesOptions);
-        dropdown7.setToolTipText("Select commodity");
-        dropdown7.setVisible(false);
-        dropdown7.setBounds(489, 514, 200, 30);
-        dropdown7.setBackground(new Color(203, 203, 203));
-        dropdown7.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        dropdown7.setFocusable(false);
-        frame.add(dropdown7);
-        dropdown7.addActionListener(e -> selectedOption3 = (String) dropdown7.getSelectedItem());
-
         resetButton.addActionListener(e -> {
-                outputLabel3.setText("");
-                option1IsSelected = false;
-                group.clearSelection();
-                option1.setVisible(false);
-                option2.setVisible(false);
-        });
-
-        resetButton1.addActionListener(e -> {
-            option2IsSelected = false;
-            dropdown3.setVisible(false);
-            dropdown4.setVisible(false);
-            dropdown5.setVisible(false);
-            dropdown6.setVisible(false);
-            dropdown7.setVisible(false);
-            dropdown2.setVisible(true);
-
+            outputLabel3.setText("");
+            outputLabel5.setText("");
+            option1IsSelected = false;
+            label6.setVisible(false);
+            group.clearSelection();
+            option1.setVisible(false);
+            option2.setVisible(false);
+            group1.clearSelection();
+            option3.setVisible(false);
+            option4.setVisible(false);
         });
 
         label1.setBounds(ss.width / 2 - 125, 125, 300, 40);
         label1.setFont(new Font("Arial", Font.BOLD, 24));
         frame.add(label1);
 
-        label2.setBounds(489, 226, 200, 30);
+        label2.setBounds(489, 200, 200, 30);
         frame.add(label2);
 
-        label3.setBounds(489, 296, 200, 30);
+        label3.setBounds(489, 270, 200, 30);
         frame.add(label3);
 
-        label4.setBounds(489, 366, 200, 30);
+        label4.setBounds(489, 480, 200, 30);
         frame.add(label4);
 
-        label5.setBounds(489, 480, 200, 30);
+        label5.setBounds(489, 340, 200, 30);
         frame.add(label5);
+
+        label7.setBounds(489, 410, 200, 30);
+        frame.add(label7);
 
         calc_Button.setBounds(489, 704, 100, 30);
         calc_Button.addActionListener(this);
@@ -223,26 +161,33 @@ public class CalculatorWindow implements ActionListener {
         returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(returnButton);
 
-        outputLabel.setBounds(604, 264, 500, 20);
+        outputLabel.setBounds(604, 240, 500, 20);
         outputLabel.setForeground(Color.red);
         frame.add(outputLabel);
 
-
-        outputLabel1.setBounds(604, 329, 500, 20);
+        outputLabel1.setBounds(604, 310, 500, 20);
         outputLabel1.setForeground(Color.red);
         frame.add(outputLabel1);
 
-        outputLabel2.setBounds(780, 401, 500, 20);
-        outputLabel2.setForeground(Color.RED);
+        outputLabel2.setBounds(780, 519, 500, 20);
+        outputLabel2.setForeground(Color.red);
         frame.add(outputLabel2);
 
-        outputLabel3.setBounds(700, 450, 500, 20);
+        outputLabel3.setBounds(700, 590, 500, 20);
         outputLabel3.setForeground(Color.red);
         frame.add(outputLabel3);
 
-        outputLabel4.setBounds(780, 516, 500, 20);
-        outputLabel4.setForeground(Color.RED);
+        outputLabel4.setBounds(604, 380, 500, 20);
+        outputLabel4.setForeground(Color.red);
         frame.add(outputLabel4);
+
+        outputLabel5.setBounds(700, 630, 500, 20);
+        outputLabel5.setForeground(Color.red);
+        frame.add(outputLabel5);
+
+        outputLabel6.setBounds(604, 450, 500, 20);
+        outputLabel6.setForeground(Color.red);
+        frame.add(outputLabel6);
 
         panel1.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel1.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -250,32 +195,22 @@ public class CalculatorWindow implements ActionListener {
 
         frame.setVisible(true);
 
-
         returnButton.addActionListener(e -> {
-                frame.dispose();
-                MainMenu menu = new MainMenu();
+            frame.dispose();
+            MainMenu menu = new MainMenu();
         });
 
         calc_Button.addActionListener(e -> {
-            if(validateTextFieldsAndDropDowns()){
+            if (validateTextFieldsAndDropDowns()) {
                 frame.dispose();
-                /*GBMCalculated calc = new GBMCalculated(startingAmount,
-                        contributionAmount,
-                        selectedOption3,
-                        selectedOption1,
-                        selectedOption4);
-                System.out.println(calc.calculateFinalInvestment(2.1, 3.1));
-                */
-                ResultWindow resultWindow = new ResultWindow();
+                calculateResults();
+                //ResultWindow resultWindow = new ResultWindow();
             }
         });
-
-
     }
 
-
     public boolean validateTextFieldsAndDropDowns (){
-        boolean isInputValid = true, isValid = false, isValid1 = false, isValidForTextFields = false;
+        boolean isInputValid = true, isValid = false, isValid1 = false, isValid2 = false, isValid3 = false, isValidForTextFields = false;
         String input = textField.getText();
         if (input.isEmpty()) {
             textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -286,7 +221,7 @@ public class CalculatorWindow implements ActionListener {
             outputLabel.setText("Please enter a valid number.");
             isInputValid = false;
         } else {
-            startingAmount = Integer.parseInt(input);
+            startingAmount = Double.parseDouble(input);
             isValid = true;
             textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             outputLabel.setText("");
@@ -302,13 +237,45 @@ public class CalculatorWindow implements ActionListener {
             outputLabel1.setText("Please enter a valid number.");
             isInputValid = false;
         } else {
-            contributionAmount = Integer.parseInt(input1);
+            contributionAmount = Double.parseDouble(input1);
             isValid1 = true;
             textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             outputLabel1.setText("");
-
         }
-        if(isValid && isValid1 && isInputValid){
+
+        String input2 = textField2.getText();
+        if (input2.isEmpty()) {
+            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel4.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input2.matches("\\d+")) {
+            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel4.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            returnRate = Double.parseDouble(input2);
+            isValid2 = true;
+            textField2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel4.setText("");
+        }
+
+        String input3 = textField3.getText();
+        if (input3.isEmpty()) {
+            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel6.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input3.matches("\\d+")) {
+            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel6.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            investmentInterval = Double.parseDouble(input3);
+            isValid3 = true;
+            textField3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel6.setText("");
+        }
+
+        if(isValid && isValid1 && isValid2 && isValid3 && isInputValid){
             isValidForTextFields = true;
         }
         boolean valid1 = false, valid2 = false, valid3 = false, isValidForDropDown = false;
@@ -324,16 +291,21 @@ public class CalculatorWindow implements ActionListener {
             valid2 = true;
             outputLabel3.setText("");
             if(option1.isSelected()){
-                selectedOption4 = option1.getText();
+                selectedOption2 = option1.getText();
             } else if (option2.isSelected()) {
-                selectedOption4 = option2.getText();
+                selectedOption2 = option2.getText();
             }
         }
-        if(option2IsSelected){
+        if(valid1 && group1.getSelection() == null){
+            outputLabel5.setText("Choose month or year");
+        } else if (valid1 && group1.getSelection() != null){
             valid3 = true;
-            outputLabel4.setText("");
-        } else {
-            outputLabel4.setText("Select an asset");
+            outputLabel5.setText("");
+            if(option3.isSelected()){
+                selectedOption3 = option3.getText();
+            } else if (option4.isSelected()) {
+                selectedOption3 = option4.getText();
+            }
         }
         if(valid1 && valid2 && valid3){
             isValidForDropDown = true;
@@ -345,6 +317,38 @@ public class CalculatorWindow implements ActionListener {
             return false;
         }
     }
+
+
+
+    public int getCompoundRate(){
+        if(Objects.equals(selectedOption1, "monthly")){
+            return 12;
+        } else if (Objects.equals(selectedOption1, "quarterly")) {
+            return 4;
+        } else if (Objects.equals(selectedOption1, "semi-annually")) {
+            return 2;
+        } else if (Objects.equals(selectedOption1, "annually")) {
+            return 1;
+        }
+        return -1;
+    }
+    public void calculateResults(){
+        values = new double[(int) investmentInterval];
+        int compoundRate = getCompoundRate();
+        for(int i = 0; i < investmentInterval; i++){
+            if(Objects.equals(selectedOption2, "beginning")){
+                values[i] = contributionAmount * ((Math.pow(1 + (returnRate / compoundRate * 100), i + 1) - 1) / (returnRate / compoundRate * 100)) * (1 + (returnRate / compoundRate * 100)) + startingAmount * (Math.pow(1 + (returnRate / compoundRate * 100), i + 1));
+            } else if (Objects.equals(selectedOption2, "end")) {
+                values[i] = contributionAmount * ((Math.pow(1 + (returnRate / compoundRate * 100), i + 1) - 1) / (returnRate / compoundRate * 100)) + startingAmount * (Math.pow(1 + (returnRate / compoundRate * 100), i + 1));
+            }
+        }
+
+        for(int i = 0; i < investmentInterval; i++){
+            System.out.print(values[i] + " ");
+        }
+    }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
