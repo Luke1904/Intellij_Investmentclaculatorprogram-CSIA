@@ -345,6 +345,7 @@ public class CalculatorWindow implements ActionListener {
 
         for(int i = 0; i < investmentInterval; i++){
             System.out.print(values[i] + " ");
+
         }
     }
 
