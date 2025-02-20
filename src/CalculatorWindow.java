@@ -3,6 +3,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
@@ -35,7 +37,8 @@ public class CalculatorWindow implements ActionListener {
             textField3 = new JTextField();
     public JComboBox<String> dropdown1;
     public boolean option1IsSelected = false;
-    public double startingAmount, contributionAmount, returnRate, investmentInterval;
+    public double startingAmount, contributionAmount, returnRate;
+    public int investmentInterval;
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
@@ -204,119 +207,119 @@ public class CalculatorWindow implements ActionListener {
             if (validateTextFieldsAndDropDowns()) {
                 frame.dispose();
                 calculateResults();
-                //ResultWindow resultWindow = new ResultWindow();
+                ResultWindow resultWindow = new ResultWindow(startingAmount, contributionAmount, returnRate, investmentInterval, selectedOption1, selectedOption2, selectedOption3);
             }
         });
     }
 
-    public boolean validateTextFieldsAndDropDowns (){
-        boolean isInputValid = true, isValid = false, isValid1 = false, isValid2 = false, isValid3 = false, isValidForTextFields = false;
-        String input = textField.getText();
-        if (input.isEmpty()) {
-            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel.setText("Input cannot be empty.");
-            isInputValid = false;
-        } else if (!input.matches("\\d+")) {
-            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel.setText("Please enter a valid number.");
-            isInputValid = false;
-        } else {
-            startingAmount = Double.parseDouble(input);
-            isValid = true;
-            textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            outputLabel.setText("");
-        }
-
-        String input1 = textField1.getText();
-        if (input1.isEmpty()) {
-            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel1.setText("Input cannot be empty.");
-            isInputValid = false;
-        } else if (!input1.matches("\\d+")) {
-            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel1.setText("Please enter a valid number.");
-            isInputValid = false;
-        } else {
-            contributionAmount = Double.parseDouble(input1);
-            isValid1 = true;
-            textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            outputLabel1.setText("");
-        }
-
-        String input2 = textField2.getText();
-        if (input2.isEmpty()) {
-            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel4.setText("Input cannot be empty.");
-            isInputValid = false;
-        } else if (!input2.matches("\\d+")) {
-            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel4.setText("Please enter a valid number.");
-            isInputValid = false;
-        } else {
-            returnRate = Double.parseDouble(input2);
-            isValid2 = true;
-            textField2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            outputLabel4.setText("");
-        }
-
-        String input3 = textField3.getText();
-        if (input3.isEmpty()) {
-            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel6.setText("Input cannot be empty.");
-            isInputValid = false;
-        } else if (!input3.matches("\\d+")) {
-            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            outputLabel6.setText("Please enter a valid number.");
-            isInputValid = false;
-        } else {
-            investmentInterval = Double.parseDouble(input3);
-            isValid3 = true;
-            textField3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            outputLabel6.setText("");
-        }
-
-        if(isValid && isValid1 && isValid2 && isValid3 && isInputValid){
-            isValidForTextFields = true;
-        }
-        boolean valid1 = false, valid2 = false, valid3 = false, isValidForDropDown = false;
-        if(option1IsSelected){
-            valid1 = true;
-            outputLabel2.setText("");
-        } else {
-            outputLabel2.setText("Select an interval");
-        }
-        if(valid1 && group.getSelection() == null){
-            outputLabel3.setText("Choose beginning or end");
-        } else if (valid1 && group.getSelection() != null) {
-            valid2 = true;
-            outputLabel3.setText("");
-            if(option1.isSelected()){
-                selectedOption2 = option1.getText();
-            } else if (option2.isSelected()) {
-                selectedOption2 = option2.getText();
+        public boolean validateTextFieldsAndDropDowns (){
+            boolean isInputValid = true, isValid = false, isValid1 = false, isValid2 = false, isValid3 = false, isValidForTextFields = false;
+            String input = textField.getText();
+            if (input.isEmpty()) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Input cannot be empty.");
+                isInputValid = false;
+            } else if (!input.matches("\\d+")) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else {
+                startingAmount = Double.parseDouble(input);
+                isValid = true;
+                textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                outputLabel.setText("");
+            }
+    
+            String input1 = textField1.getText();
+            if (input1.isEmpty()) {
+                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel1.setText("Input cannot be empty.");
+                isInputValid = false;
+            } else if (!input1.matches("\\d+")) {
+                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel1.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else {
+                contributionAmount = Double.parseDouble(input1);
+                isValid1 = true;
+                textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                outputLabel1.setText("");
+            }
+    
+            String input2 = textField2.getText();
+            if (input2.isEmpty()) {
+                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel4.setText("Input cannot be empty.");
+                isInputValid = false;
+            } else if (!input2.matches("\\d+")) {
+                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel4.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else {
+                returnRate = Double.parseDouble(input2);
+                isValid2 = true;
+                textField2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                outputLabel4.setText("");
+            }
+    
+            String input3 = textField3.getText();
+            if (input3.isEmpty()) {
+                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel6.setText("Input cannot be empty.");
+                isInputValid = false;
+            } else if (!input3.matches("\\d+")) {
+                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel6.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else {
+                investmentInterval = Integer.parseInt(input3);
+                isValid3 = true;
+                textField3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                outputLabel6.setText("");
+            }
+    
+            if(isValid && isValid1 && isValid2 && isValid3 && isInputValid){
+                isValidForTextFields = true;
+            }
+            boolean valid1 = false, valid2 = false, valid3 = false, isValidForDropDown = false;
+            if(option1IsSelected){
+                valid1 = true;
+                outputLabel2.setText("");
+            } else {
+                outputLabel2.setText("Select an interval");
+            }
+            if(valid1 && group.getSelection() == null){
+                outputLabel3.setText("Choose beginning or end");
+            } else if (valid1 && group.getSelection() != null) {
+                valid2 = true;
+                outputLabel3.setText("");
+                if(option1.isSelected()){
+                    selectedOption2 = option1.getText();
+                } else if (option2.isSelected()) {
+                    selectedOption2 = option2.getText();
+                }
+            }
+            if(valid1 && group1.getSelection() == null){
+                outputLabel5.setText("Choose month or year");
+            } else if (valid1 && group1.getSelection() != null){
+                valid3 = true;
+                outputLabel5.setText("");
+                if(option3.isSelected()){
+                    selectedOption3 = option3.getText();
+                } else if (option4.isSelected()) {
+                    selectedOption3 = option4.getText();
+                }
+            }
+            if(valid1 && valid2 && valid3){
+                isValidForDropDown = true;
+            }
+            if(isValidForDropDown && isValidForTextFields){
+                return true;
+            }
+            else {
+                return false;
             }
         }
-        if(valid1 && group1.getSelection() == null){
-            outputLabel5.setText("Choose month or year");
-        } else if (valid1 && group1.getSelection() != null){
-            valid3 = true;
-            outputLabel5.setText("");
-            if(option3.isSelected()){
-                selectedOption3 = option3.getText();
-            } else if (option4.isSelected()) {
-                selectedOption3 = option4.getText();
-            }
-        }
-        if(valid1 && valid2 && valid3){
-            isValidForDropDown = true;
-        }
-        if(isValidForDropDown && isValidForTextFields){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 
 
 
@@ -332,24 +335,24 @@ public class CalculatorWindow implements ActionListener {
         }
         return -1;
     }
+
     public void calculateResults(){
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setRoundingMode(RoundingMode.CEILING);
         values = new double[(int) investmentInterval];
         int compoundRate = getCompoundRate();
         for(int i = 0; i < investmentInterval; i++){
-            if(Objects.equals(selectedOption2, "beginning")){
-                values[i] = contributionAmount * ((Math.pow(1 + (returnRate / compoundRate * 100), i + 1) - 1) / (returnRate / compoundRate * 100)) * (1 + (returnRate / compoundRate * 100)) + startingAmount * (Math.pow(1 + (returnRate / compoundRate * 100), i + 1));
-            } else if (Objects.equals(selectedOption2, "end")) {
-                values[i] = contributionAmount * ((Math.pow(1 + (returnRate / compoundRate * 100), i + 1) - 1) / (returnRate / compoundRate * 100)) + startingAmount * (Math.pow(1 + (returnRate / compoundRate * 100), i + 1));
+            if(Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "year")){
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100)) * (1 + (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+            } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "year")) {
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+            } else if (Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "month")) {
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200)) * (1 + (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+            } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "month")) {
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
             }
         }
-
-        for(int i = 0; i < investmentInterval; i++){
-            System.out.print(values[i] + " ");
-
-        }
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {

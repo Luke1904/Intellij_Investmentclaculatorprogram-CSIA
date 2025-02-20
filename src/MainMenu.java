@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
-
+import java.io.File;
+import java.io.IOException;
 
 
 public class MainMenu implements ActionListener{
@@ -54,9 +55,14 @@ public class MainMenu implements ActionListener{
         });
 
         button2.addActionListener(e -> {
-            if (e.getSource() == button2) { // Check if the source of the event is button2
-                frame.dispose(); // Dispose the current frame
-                SavesMenu saves = new SavesMenu(); // Open the SavesMenu
+            if (e.getSource() == button2) {
+                String directoryPath = "X:\\Saves\\";
+                File directory = new File(directoryPath);
+                    try {
+                        Desktop.getDesktop().open(directory);
+                    } catch (IOException a) {
+                        a.printStackTrace();
+                    }
             }
         });
 
