@@ -1,6 +1,8 @@
 import org.jfree.chart.ChartPanel;
 
+
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,13 +13,15 @@ import java.io.IOException;
 public class ResultWindow implements ActionListener {
 
     JFrame frame = new JFrame();
-    JButton createSave = new JButton("Create save");
+    JPanel panel = new JPanel();
+    JButton createSave = new JButton("Create save"), goBackToCalculator = new JButton("Go back to calculator");
     public double startingAmount, contributionAmount, returnRate;
     public int investmentInterval;
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
     ResultWindow(double startingAmount, double contributionAmount, double returnRate, int investmentInterval, String selectedOption1, String selectedOption2, String selectedOption3, double[] values){
+        Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
         this.startingAmount = startingAmount;
         this.contributionAmount = contributionAmount;
         this.returnRate = returnRate;
@@ -27,8 +31,14 @@ public class ResultWindow implements ActionListener {
         this.selectedOption3 = selectedOption3;
         this.values = values;
 
-        createSave.setBounds(500, 500, 100, 20);
+        goBackToCalculator.setBounds(907, 564, 150, 30);
+        goBackToCalculator.setFocusable(false);
+        goBackToCalculator.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        frame.add(goBackToCalculator);
+
+        createSave.setBounds(917, 514, 130, 30);
         createSave.setFocusable(false);
+        createSave.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(createSave);
 
         frame.setLayout(null);
@@ -39,11 +49,11 @@ public class ResultWindow implements ActionListener {
         frame.setTitle("Result Window");
         frame.getContentPane().setBackground(new Color(203, 203, 203));
 
-        InvestmentGrowthChart chart = new InvestmentGrowthChart("Graph1");
-        ChartPanel p = chart.getChartPanel();
-        p.setBounds(100, 100, 500, 200);
-        p.setVisible(true);
+        ChartPanel p = InvestmentGrowthChart.getChartPanel();
+        p.setBackground(UIManager.getColor("Panel.background"));
+        p.setBounds(497, 247, 250, 200);
         frame.add(p);
+
 
         createSave.addActionListener(e -> {
             String directory = "X:\\Saves\\";
@@ -74,6 +84,15 @@ public class ResultWindow implements ActionListener {
             }
 
         });
+
+        goBackToCalculator.addActionListener(e ->{
+            frame.dispose();
+            CalculatorWindow calculatorWindow = new CalculatorWindow();
+        });
+
+        panel.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
+        panel.setBorder(BorderFactory.createLineBorder(Color.black));
+        frame.add(panel);
     }
 
 

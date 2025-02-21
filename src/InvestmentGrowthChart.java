@@ -8,21 +8,17 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.chart.ui.RectangleInsets;
 
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.JFrame;
 
 public class InvestmentGrowthChart{
-    public InvestmentGrowthChart(String title) {
-        JFreeChart chart = createChart();
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(800, 500));
+    public InvestmentGrowthChart() {
     }
 
-    private JFreeChart createChart() {
-        // Create dataset
+    private static JFreeChart createChart() {
+
         DefaultCategoryDataset dataset = createDataset();
 
         // Create chart
@@ -45,7 +41,7 @@ public class InvestmentGrowthChart{
 
         // Configure plot
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setBackgroundPaint(Color.white);
+        plot.setBackgroundPaint(UIManager.getColor("Panel.background"));
         plot.setOutlinePaint(null);
         plot.setRangeGridlinesVisible(true);
         plot.setRangeGridlinePaint(new Color(230, 230, 230));
@@ -79,7 +75,7 @@ public class InvestmentGrowthChart{
         return chart;
     }
 
-    private DefaultCategoryDataset createDataset() {
+    private static DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // Sample data
@@ -108,10 +104,9 @@ public class InvestmentGrowthChart{
 
         return dataset;
     }
-    public ChartPanel getChartPanel() {
-        JFreeChart chart = createChart();
+    public static ChartPanel getChartPanel() {
+        JFreeChart chart = InvestmentGrowthChart.createChart();
+        chart.setBackgroundPaint(UIManager.getColor("Panel.background"));
         return new ChartPanel(chart);
     }
-
-
 }
