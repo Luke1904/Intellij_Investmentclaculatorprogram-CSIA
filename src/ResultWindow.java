@@ -1,6 +1,4 @@
 import org.jfree.chart.ChartPanel;
-
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -13,7 +11,8 @@ import java.io.IOException;
 public class ResultWindow implements ActionListener {
 
     JFrame frame = new JFrame();
-    JPanel panel = new JPanel();
+    JPanel panel = new LinePanel();
+    JLabel label = new JLabel("Results");
     JButton createSave = new JButton("Create save"), goBackToCalculator = new JButton("Go back to calculator");
     public double startingAmount, contributionAmount, returnRate;
     public int investmentInterval;
@@ -31,6 +30,10 @@ public class ResultWindow implements ActionListener {
         this.selectedOption3 = selectedOption3;
         this.values = values;
 
+        label.setBounds(711, 146, 300, 40);
+        label.setFont(new Font("Arial", Font.BOLD, 24));
+        frame.add(label);
+
         goBackToCalculator.setBounds(907, 564, 150, 30);
         goBackToCalculator.setFocusable(false);
         goBackToCalculator.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -41,6 +44,8 @@ public class ResultWindow implements ActionListener {
         createSave.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(createSave);
 
+
+
         frame.setLayout(null);
         frame.setFocusable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,9 +54,14 @@ public class ResultWindow implements ActionListener {
         frame.setTitle("Result Window");
         frame.getContentPane().setBackground(new Color(203, 203, 203));
 
-        ChartPanel p = InvestmentGrowthChart.getChartPanel();
+        ChartPanel s = InvestmentGrowthChart.getChartPanel();
+        s.setBackground(UIManager.getColor("Panel.background"));
+        s.setBounds(450, 247, 250, 200);
+        frame.add(s);
+
+        ChartPanel p = InvestmentPieChart.getChartPanel();
         p.setBackground(UIManager.getColor("Panel.background"));
-        p.setBounds(497, 247, 250, 200);
+        p.setBounds(820, 247, 240, 180);
         frame.add(p);
 
 
@@ -93,9 +103,8 @@ public class ResultWindow implements ActionListener {
         panel.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
         frame.add(panel);
+
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
