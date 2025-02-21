@@ -207,7 +207,7 @@ public class CalculatorWindow implements ActionListener {
             if (validateTextFieldsAndDropDowns()) {
                 frame.dispose();
                 calculateResults();
-                ResultWindow resultWindow = new ResultWindow(startingAmount, contributionAmount, returnRate, investmentInterval, selectedOption1, selectedOption2, selectedOption3);
+                ResultWindow resultWindow = new ResultWindow(startingAmount, contributionAmount, returnRate, investmentInterval, selectedOption1, selectedOption2, selectedOption3, values);
             }
         });
     }

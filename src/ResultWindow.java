@@ -1,3 +1,5 @@
+import org.jfree.chart.ChartPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +17,7 @@ public class ResultWindow implements ActionListener {
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
-    ResultWindow(double startingAmount, double contributionAmount, double returnRate, int investmentInterval, String selectedOption1, String selectedOption2, String selectedOption3){
+    ResultWindow(double startingAmount, double contributionAmount, double returnRate, int investmentInterval, String selectedOption1, String selectedOption2, String selectedOption3, double[] values){
         this.startingAmount = startingAmount;
         this.contributionAmount = contributionAmount;
         this.returnRate = returnRate;
@@ -23,6 +25,7 @@ public class ResultWindow implements ActionListener {
         this.selectedOption1 = selectedOption1;
         this.selectedOption2 = selectedOption2;
         this.selectedOption3 = selectedOption3;
+        this.values = values;
 
         createSave.setBounds(500, 500, 100, 20);
         createSave.setFocusable(false);
@@ -35,6 +38,12 @@ public class ResultWindow implements ActionListener {
         frame.setVisible(true);
         frame.setTitle("Result Window");
         frame.getContentPane().setBackground(new Color(203, 203, 203));
+
+        InvestmentGrowthChart chart = new InvestmentGrowthChart("Graph1");
+        ChartPanel p = chart.getChartPanel();
+        p.setBounds(100, 100, 500, 200);
+        p.setVisible(true);
+        frame.add(p);
 
         createSave.addActionListener(e -> {
             String directory = "X:\\Saves\\";

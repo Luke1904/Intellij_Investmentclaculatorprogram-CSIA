@@ -12,7 +12,7 @@ public class MainMenu implements ActionListener{
 
     public JFrame frame = new JFrame("Investment calculator");
     public JLabel label = new JLabel("Main Menu");
-    public JButton button1 = new JButton("Go to investment calculator"), button2 = new JButton("Go to saves");
+    public JButton button1 = new JButton("Go to investment calculator"), button2 = new JButton("Open saves");
     public JPanel panel = new JPanel();
 
     public MainMenu() {
