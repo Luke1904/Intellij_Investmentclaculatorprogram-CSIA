@@ -12,14 +12,22 @@ import org.jfree.chart.ui.RectangleInsets;
 
 import javax.swing.*;
 import java.awt.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 
 public class InvestmentGrowthChart{
+
+    static ArrayList<double[]> data = new ArrayList<>();
+
     public InvestmentGrowthChart() {
+
     }
 
     private static JFreeChart createChart() {
 
-        DefaultCategoryDataset dataset = createDataset();
+        DefaultCategoryDataset dataset = inputDataset();
 
         // Create chart
         JFreeChart chart = ChartFactory.createStackedBarChart(
@@ -75,27 +83,18 @@ public class InvestmentGrowthChart{
         return chart;
     }
 
-    private static DefaultCategoryDataset createDataset() {
+    public static void addFirstTerm(double startingAmount){
+        data.add( new double[]{data.size(), startingAmount, 0, 0});
+    }
+    public static void createDataset(double starting, double interest, double contribution) {
+        data.add( new double[]{data.size(), starting, interest, contribution});
+    }
+    private static DefaultCategoryDataset inputDataset(){
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setRoundingMode(RoundingMode.CEILING);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        // Sample data
-        // Year 0-10, Starting Amount, Contributions, Interest
-        Object[][] data = {
-                {0, 20000, 0, 0},
-                {1, 20000, 10000, 3000},
-                {2, 20000, 20000, 7000},
-                {3, 20000, 30000, 12000},
-                {4, 20000, 40000, 18000},
-                {5, 20000, 50000, 25000},
-                {6, 20000, 60000, 33000},
-                {7, 20000, 70000, 42000},
-                {8, 20000, 80000, 52000},
-                {9, 20000, 90000, 63000},
-                {10, 20000, 100000, 75000}
-        };
-
-        // Add data to dataset
-        for (Object[] row : data) {
+        for (double[] row : data) {
             int year = (int) row[0];
             dataset.addValue((Number) row[1], "Starting Amount", Integer.toString(year));
             dataset.addValue((Number) row[2], "Contributions", Integer.toString(year));

@@ -3,8 +3,6 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
@@ -337,19 +335,31 @@ public class CalculatorWindow implements ActionListener {
     }
 
     public void calculateResults(){
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setRoundingMode(RoundingMode.CEILING);
+        double contribution, interest;
         values = new double[(int) investmentInterval];
+        InvestmentGrowthChart.addFirstTerm(startingAmount);
         int compoundRate = getCompoundRate();
         for(int i = 0; i < investmentInterval; i++){
             if(Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "year")){
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100)) * (1 + (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                interest = values[i] - startingAmount;
+                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
             } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "year")) {
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                interest = values[i] - startingAmount;
+                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
             } else if (Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "month")) {
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200)) * (1 + (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                interest = values[i] - startingAmount;
+                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
             } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "month")) {
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                interest = values[i] - startingAmount;
+                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
             }
         }
     }
