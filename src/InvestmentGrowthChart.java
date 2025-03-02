@@ -12,8 +12,6 @@ import org.jfree.chart.ui.RectangleInsets;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -84,14 +82,15 @@ public class InvestmentGrowthChart{
     }
 
     public static void addFirstTerm(double startingAmount){
+        if(!data.isEmpty()){
+            data.clear();
+        }
         data.add( new double[]{data.size(), startingAmount, 0, 0});
     }
     public static void createDataset(double starting, double interest, double contribution) {
         data.add( new double[]{data.size(), starting, interest, contribution});
     }
     private static DefaultCategoryDataset inputDataset(){
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setRoundingMode(RoundingMode.CEILING);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (double[] row : data) {

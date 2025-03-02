@@ -11,7 +11,7 @@ public class InvestmentPieChart {
     public InvestmentPieChart() {
     }
 
-    private static JFreeChart createChart() {
+    public static JFreeChart createChart() {
         DefaultPieDataset dataset = createDataset();
 
         // Create the pie chart
@@ -34,13 +34,13 @@ public class InvestmentPieChart {
         return chart;
     }
 
-    private static DefaultPieDataset createDataset() {
+    public static DefaultPieDataset createDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
 
         // Sample values (Modify as needed)
-        double startingAmount = 20000;
-        double contributions = 100000;
-        double interest = 75000;
+        double startingAmount = CalculatorWindow.getStartingAmount();
+        double contributions = CalculatorWindow.getTotalContribution();
+        double interest = CalculatorWindow.getTotalInterest();
 
         dataset.setValue("Starting Amount", startingAmount);
         dataset.setValue("Contributions", contributions);

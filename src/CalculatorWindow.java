@@ -35,7 +35,13 @@ public class CalculatorWindow implements ActionListener {
             textField3 = new JTextField();
     public JComboBox<String> dropdown1;
     public boolean option1IsSelected = false;
-    public double startingAmount, contributionAmount, returnRate;
+    public static double startingAmount;
+    public double contributionAmount;
+    public double returnRate;
+    public static double ROI;
+    public static double totalContribution;
+    public static double totalInterest;
+    public static double totalInvestment;
     public int investmentInterval;
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
@@ -335,34 +341,55 @@ public class CalculatorWindow implements ActionListener {
     }
 
     public void calculateResults(){
-        double contribution, interest;
+        double contributionforGrowthChart, interestforGrowthChart;
         values = new double[(int) investmentInterval];
         InvestmentGrowthChart.addFirstTerm(startingAmount);
         int compoundRate = getCompoundRate();
         for(int i = 0; i < investmentInterval; i++){
             if(Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "year")){
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100)) * (1 + (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                interest = values[i] - startingAmount;
-                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
+                interestforGrowthChart = values[i] - startingAmount;
+                contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "year")) {
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                interest = values[i] - startingAmount;
-                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
+                interestforGrowthChart = values[i] - startingAmount;
+                contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             } else if (Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "month")) {
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200)) * (1 + (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                interest = values[i] - startingAmount;
-                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
+                interestforGrowthChart = values[i] - startingAmount;
+                contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "month")) {
                 values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                interest = values[i] - startingAmount;
-                contribution = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
-                InvestmentGrowthChart.createDataset(startingAmount, interest, contribution);
+                interestforGrowthChart = values[i] - startingAmount;
+                contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             }
         }
+        totalInterest = values[investmentInterval - 1] - startingAmount;
+        totalContribution = values[investmentInterval - 1] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), investmentInterval));
+        totalInvestment = values[investmentInterval - 1];
+        ROI = values[investmentInterval - 1] / startingAmount;
     }
+    public static double getStartingAmount(){
+        return startingAmount;
+    }
+    public static double getTotalContribution(){
+        return totalContribution;
+    }
+    public static double getTotalInterest(){
+        return totalInterest;
+    }
+    public static double getTotalInvestment(){
+        return totalInvestment;
+    }
+    public static double getROI(){
+        return ROI;
+    }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
