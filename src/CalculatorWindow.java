@@ -34,7 +34,7 @@ public class CalculatorWindow implements ActionListener {
             textField2 = new JTextField(),
             textField3 = new JTextField();
     public JComboBox<String> dropdown1;
-    public boolean option1IsSelected = false;
+    public boolean option1IsSelected = false, pass = true;
     public static double startingAmount;
     public double contributionAmount;
     public double returnRate;
@@ -211,7 +211,9 @@ public class CalculatorWindow implements ActionListener {
             if (validateTextFieldsAndDropDowns()) {
                 frame.dispose();
                 calculateResults();
-                ResultWindow resultWindow = new ResultWindow(startingAmount, contributionAmount, returnRate, investmentInterval, selectedOption1, selectedOption2, selectedOption3, values);
+                if(pass) {
+                    ResultWindow resultWindow = new ResultWindow(startingAmount, contributionAmount, returnRate, investmentInterval, selectedOption1, selectedOption2, selectedOption3, values);
+                }
             }
         });
     }
@@ -219,29 +221,42 @@ public class CalculatorWindow implements ActionListener {
         public boolean validateTextFieldsAndDropDowns (){
             boolean isInputValid = true, isValid = false, isValid1 = false, isValid2 = false, isValid3 = false, isValidForTextFields = false;
             String input = textField.getText();
+
             if (input.isEmpty()) {
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Input cannot be empty.");
                 isInputValid = false;
-            } else if (!input.matches("\\d+")) {
+            } else if (!input.matches("-?\\d+(\\.\\d+)?")) {
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
-            } else {
+            } else if (input.length() > 8) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (input.charAt(0) == '0' && input.length() > 1) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
+                isInputValid = false;
+            }else {
                 startingAmount = Double.parseDouble(input);
                 isValid = true;
                 textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 outputLabel.setText("");
             }
-    
+
             String input1 = textField1.getText();
             if (input1.isEmpty()) {
                 textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel1.setText("Input cannot be empty.");
                 isInputValid = false;
-            } else if (!input1.matches("\\d+")) {
+            } else if (!input1.matches("-?\\d+(\\.\\d+)?")) {
                 textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel1.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (input1.charAt(0) == '0' && input1.length() > 1) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
                 contributionAmount = Double.parseDouble(input1);
@@ -249,15 +264,23 @@ public class CalculatorWindow implements ActionListener {
                 textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 outputLabel1.setText("");
             }
-    
+
             String input2 = textField2.getText();
             if (input2.isEmpty()) {
                 textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel4.setText("Input cannot be empty.");
                 isInputValid = false;
-            } else if (!input2.matches("\\d+")) {
+            } else if (!input2.matches("-?\\d+(\\.\\d+)?")) {
                 textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel4.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (input2.length() > 8) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (input2.charAt(0) == '0' && input2.length() > 1) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
                 returnRate = Double.parseDouble(input2);
@@ -265,15 +288,23 @@ public class CalculatorWindow implements ActionListener {
                 textField2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 outputLabel4.setText("");
             }
-    
+
             String input3 = textField3.getText();
             if (input3.isEmpty()) {
                 textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel6.setText("Input cannot be empty.");
                 isInputValid = false;
-            } else if (!input3.matches("\\d+")) {
+            } else if (!input3.matches("-?\\d+(\\.\\d+)?")) {
                 textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel6.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (input3.length() > 8) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (input3.charAt(0) == '0' && input3.length() > 1) {
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
                 investmentInterval = Integer.parseInt(input3);
@@ -281,7 +312,7 @@ public class CalculatorWindow implements ActionListener {
                 textField3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 outputLabel6.setText("");
             }
-    
+
             if(isValid && isValid1 && isValid2 && isValid3 && isInputValid){
                 isValidForTextFields = true;
             }
@@ -314,6 +345,8 @@ public class CalculatorWindow implements ActionListener {
                     selectedOption3 = option4.getText();
                 }
             }
+
+
             if(valid1 && valid2 && valid3){
                 isValidForDropDown = true;
             }
@@ -324,8 +357,6 @@ public class CalculatorWindow implements ActionListener {
                 return false;
             }
         }
-
-
 
     public int getCompoundRate(){
         if(Objects.equals(selectedOption1, "monthly")){
@@ -368,10 +399,15 @@ public class CalculatorWindow implements ActionListener {
                 InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             }
         }
-        totalInterest = values[investmentInterval - 1] - startingAmount;
-        totalContribution = values[investmentInterval - 1] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), investmentInterval));
-        totalInvestment = values[investmentInterval - 1];
-        ROI = values[investmentInterval - 1] / startingAmount;
+        if(values[investmentInterval - 1] > 100000000){
+            pass = false;
+        }
+        if(pass) {
+            totalInterest = values[investmentInterval - 1] - startingAmount;
+            totalContribution = values[investmentInterval - 1] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), investmentInterval));
+            totalInvestment = values[investmentInterval - 1];
+            ROI = (values[investmentInterval - 1] / startingAmount) * 100;
+        }
     }
     public static double getStartingAmount(){
         return startingAmount;

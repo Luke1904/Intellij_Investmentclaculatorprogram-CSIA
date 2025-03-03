@@ -60,8 +60,8 @@ public class InvestmentGrowthChart{
 
         // Set colors matching the image
         renderer.setSeriesPaint(0, new Color(55, 125, 255));  // Blue for Starting Amount
-        renderer.setSeriesPaint(1, new Color(85, 170, 85));   // Green for Contributions
-        renderer.setSeriesPaint(2, new Color(170, 0, 0));     // Dark red for Interest
+        renderer.setSeriesPaint(1, new Color(170, 0, 0));   // Green for Contributions
+        renderer.setSeriesPaint(2, new Color(85, 170, 85));     // Dark red for Interest
 
         // Configure domain axis (X axis)
         CategoryAxis domainAxis = plot.getDomainAxis();
@@ -74,7 +74,7 @@ public class InvestmentGrowthChart{
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         rangeAxis.setTickLabelFont(new Font("SansSerif", Font.PLAIN, 11));
         rangeAxis.setLabelFont(new Font("SansSerif", Font.BOLD, 12));
-        rangeAxis.setRangeWithMargins(0, 200000);
+        rangeAxis.setRangeWithMargins(0, 2 * CalculatorWindow.getTotalInvestment());
         rangeAxis.setTickUnit(new org.jfree.chart.axis.NumberTickUnit(50000));
         rangeAxis.setNumberFormatOverride(new java.text.DecimalFormat("$#,###"));
 
@@ -96,8 +96,8 @@ public class InvestmentGrowthChart{
         for (double[] row : data) {
             int year = (int) row[0];
             dataset.addValue((Number) row[1], "Starting Amount", Integer.toString(year));
-            dataset.addValue((Number) row[2], "Contributions", Integer.toString(year));
-            dataset.addValue((Number) row[3], "Interest", Integer.toString(year));
+            dataset.addValue((Number) row[2], "Interest", Integer.toString(year));
+            dataset.addValue((Number) row[3], "Contributions", Integer.toString(year));
         }
 
         return dataset;
