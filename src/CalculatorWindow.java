@@ -11,7 +11,14 @@ public class CalculatorWindow implements ActionListener {
     public JFrame frame = new JFrame("Investment Calculator");
     public JButton resetButton = new JButton("reset"),
             calc_Button = new JButton("Calculate"),
-            returnButton = new JButton();
+            returnButton = new JButton(),
+            infoButton1 = new JButton("i"),
+            infoButton2 = new JButton("i"),
+            infoButton3 = new JButton("i"),
+            infoButton4 = new JButton("i"),
+            infoButton5 = new JButton("i"),
+            infoButton6 = new JButton("i"),
+            infoButton7 = new JButton("i");
     public JRadioButton option1 = new JRadioButton("beginning"), option2 = new JRadioButton("end"), option3 = new JRadioButton("month"), option4 = new JRadioButton("year");
     public ButtonGroup group = new ButtonGroup(), group1 = new ButtonGroup();
     public JLabel label1 = new JLabel("Investment Calculator"),
@@ -65,6 +72,12 @@ public class CalculatorWindow implements ActionListener {
         option1.setVisible(false);
         option2.setVisible(false);
 
+        infoButton6.setBounds(730, 590, 20, 20);
+        infoButton6.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton6.setFocusable(false);
+        infoButton6.setVisible(false);
+        frame.add(infoButton6);
+
         option3.setBounds(490, 630, 100, 20);
         option3.setFocusable(false);
         option4.setBounds(600, 630, 100, 20);
@@ -76,6 +89,12 @@ public class CalculatorWindow implements ActionListener {
         option3.setVisible(false);
         option4.setVisible(false);
 
+        infoButton7.setBounds(730, 630, 20, 20);
+        infoButton7.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton7.setFocusable(false);
+        infoButton7.setVisible(false);
+        frame.add(infoButton7);
+
         label6.setBounds(490, 550, 200, 30);
         label6.setVisible(false);
         frame.add(label6);
@@ -86,21 +105,46 @@ public class CalculatorWindow implements ActionListener {
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
+        infoButton5.setBounds(800, 514, 20, 20);
+        infoButton5.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton5.setFocusable(false);
+        frame.add(infoButton5);
+
         textField.setBounds(490, 240, 100, 20);
         textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField);
+
+        infoButton1.setBounds(620, 240, 20, 20);
+        infoButton1.setFocusable(false);
+        infoButton1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        frame.add(infoButton1);
 
         textField1.setBounds(490, 310, 100, 20);
         textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField1);
 
+        infoButton2.setBounds(620, 310, 20, 20);
+        infoButton2.setFocusable(false);
+        infoButton2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        frame.add(infoButton2);
+
         textField2.setBounds(490, 380, 100, 20);
         textField2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField2);
 
+        infoButton3.setBounds(620, 380, 20, 20);
+        infoButton3.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton3.setFocusable(false);
+        frame.add(infoButton3);
+
         textField3.setBounds(490, 450, 100, 20);
         textField3.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField3);
+
+        infoButton4.setBounds(620, 450, 20, 20);
+        infoButton4.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton4.setFocusable(false);
+        frame.add(infoButton4);
 
         String[] timeInterval = {"monthly", "quarterly", "semi-annually", "annually"};
         dropdown1 = new JComboBox<>(timeInterval);
@@ -115,6 +159,8 @@ public class CalculatorWindow implements ActionListener {
             selectedOption1 = (String) dropdown1.getSelectedItem();
             if (Objects.equals(selectedOption1, "monthly") || Objects.equals(selectedOption1, "quarterly") || Objects.equals(selectedOption1, "semi-annually") || Objects.equals(selectedOption1, "annually")) {
                 label6.setVisible(true);
+                infoButton6.setVisible(true);
+                infoButton7.setVisible(true);
                 option1.setVisible(true);
                 option2.setVisible(true);
                 option3.setVisible(true);
@@ -123,6 +169,8 @@ public class CalculatorWindow implements ActionListener {
         });
 
         resetButton.addActionListener(e -> {
+            infoButton6.setVisible(false);
+            infoButton7.setVisible(false);
             outputLabel3.setText("");
             outputLabel5.setText("");
             option1IsSelected = false;
@@ -223,22 +271,27 @@ public class CalculatorWindow implements ActionListener {
             String input = textField.getText();
 
             if (input.isEmpty()) {
+                infoButton1.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Input cannot be empty.");
                 isInputValid = false;
             } else if (!input.matches("-?\\d+(\\.\\d+)?")) {
+                infoButton1.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input.length() > 8) {
+                infoButton1.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input.charAt(0) == '0' && input.length() > 1) {
+                infoButton1.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             }else {
+                infoButton1.setVisible(true);
                 startingAmount = Double.parseDouble(input);
                 isValid = true;
                 textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -247,18 +300,22 @@ public class CalculatorWindow implements ActionListener {
 
             String input1 = textField1.getText();
             if (input1.isEmpty()) {
+                infoButton2.setVisible(false);
                 textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel1.setText("Input cannot be empty.");
                 isInputValid = false;
             } else if (!input1.matches("-?\\d+(\\.\\d+)?")) {
+                infoButton2.setVisible(false);
                 textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel1.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input1.charAt(0) == '0' && input1.length() > 1) {
+                infoButton2.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
+                infoButton2.setVisible(true);
                 contributionAmount = Double.parseDouble(input1);
                 isValid1 = true;
                 textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -267,22 +324,27 @@ public class CalculatorWindow implements ActionListener {
 
             String input2 = textField2.getText();
             if (input2.isEmpty()) {
+                infoButton3.setVisible(false);
                 textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel4.setText("Input cannot be empty.");
                 isInputValid = false;
             } else if (!input2.matches("-?\\d+(\\.\\d+)?")) {
+                infoButton3.setVisible(false);
                 textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel4.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input2.length() > 8) {
+                infoButton3.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input2.charAt(0) == '0' && input2.length() > 1) {
+                infoButton3.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
+                infoButton3.setVisible(true);
                 returnRate = Double.parseDouble(input2);
                 isValid2 = true;
                 textField2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -291,22 +353,27 @@ public class CalculatorWindow implements ActionListener {
 
             String input3 = textField3.getText();
             if (input3.isEmpty()) {
+                infoButton4.setVisible(false);
                 textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel6.setText("Input cannot be empty.");
                 isInputValid = false;
             } else if (!input3.matches("-?\\d+(\\.\\d+)?")) {
+                infoButton4.setVisible(false);
                 textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel6.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input3.length() > 8) {
+                infoButton4.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input3.charAt(0) == '0' && input3.length() > 1) {
+                infoButton4.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
+                infoButton4.setVisible(true);
                 investmentInterval = Integer.parseInt(input3);
                 isValid3 = true;
                 textField3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -318,14 +385,18 @@ public class CalculatorWindow implements ActionListener {
             }
             boolean valid1 = false, valid2 = false, valid3 = false, isValidForDropDown = false;
             if(option1IsSelected){
+                infoButton5.setVisible(true);
                 valid1 = true;
                 outputLabel2.setText("");
             } else {
+                infoButton5.setVisible(false);
                 outputLabel2.setText("Select an interval");
             }
             if(valid1 && group.getSelection() == null){
+                infoButton6.setVisible(false);
                 outputLabel3.setText("Choose beginning or end");
             } else if (valid1 && group.getSelection() != null) {
+                infoButton5.setVisible(true);
                 valid2 = true;
                 outputLabel3.setText("");
                 if(option1.isSelected()){
@@ -335,8 +406,10 @@ public class CalculatorWindow implements ActionListener {
                 }
             }
             if(valid1 && group1.getSelection() == null){
+                infoButton7.setVisible(false);
                 outputLabel5.setText("Choose month or year");
             } else if (valid1 && group1.getSelection() != null){
+                infoButton7.setVisible(true);
                 valid3 = true;
                 outputLabel5.setText("");
                 if(option3.isSelected()){

@@ -119,13 +119,17 @@ public class ResultWindow implements ActionListener {
 
             try {
                 FileWriter writer = new FileWriter(file);
-                writer.write("Starting Amount: " + this.startingAmount + "\n");
-                writer.write("Contribution Amount: " + this.contributionAmount + "\n");
-                writer.write("Return rate: " + this.returnRate + "\n");
+                writer.write("Starting Amount: " + String.format("%.2f", this.startingAmount) + "\n");
+                writer.write("Contribution Amount: " + String.format("%.2f", this.contributionAmount) + "\n");
+                writer.write("Return rate: " + String.format("%.2f", this.returnRate) + "\n");
                 writer.write("Investment interval: " + this.investmentInterval + "\n");
                 writer.write("Compounding rate: " + this.selectedOption1 + "\n");
                 writer.write("For the first option, you have chosen: " + this.selectedOption2 + "\n");
                 writer.write("For the second option, you have chosen: " + this.selectedOption3 + "\n");
+                writer.write("Total contribution: " + String.format("%.2f", CalculatorWindow.getTotalContribution()) + "\n");
+                writer.write("Total interest: " + String.format("%.2f", CalculatorWindow.getTotalInterest()) + "\n");
+                writer.write("Total investment: " + String.format("%.2f", CalculatorWindow.getTotalInvestment()) + "\n");
+                writer.write("Total Return on Investment: " + String.format("%.2f", CalculatorWindow.getROI()) + "\n");
                 writer.close();
             } catch (IOException a) {
                 a.printStackTrace();

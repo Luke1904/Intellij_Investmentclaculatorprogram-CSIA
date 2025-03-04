@@ -75,7 +75,7 @@ public class InvestmentGrowthChart{
         rangeAxis.setTickLabelFont(new Font("SansSerif", Font.PLAIN, 11));
         rangeAxis.setLabelFont(new Font("SansSerif", Font.BOLD, 12));
         rangeAxis.setRangeWithMargins(0, 2 * CalculatorWindow.getTotalInvestment());
-        rangeAxis.setTickUnit(new org.jfree.chart.axis.NumberTickUnit(50000));
+        rangeAxis.setTickUnit(new org.jfree.chart.axis.NumberTickUnit(CalculatorWindow.getTotalInvestment() / 2));
         rangeAxis.setNumberFormatOverride(new java.text.DecimalFormat("$#,###"));
 
         return chart;
