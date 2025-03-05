@@ -21,9 +21,13 @@ public class ResultWindow implements ActionListener {
             textField1 = new JTextField(),
             textField2 = new JTextField(),
             textField3 = new JTextField();
-    JButton createSave = new JButton("Create save"), goBackToCalculator = new JButton("Go back to calculator");
+    JButton createSave = new JButton("Create save"), goBackToCalculator = new JButton("Go back to calculator"),
+            infoButton1 = new JButton("i"),
+            infoButton2 = new JButton("i"),
+            infoButton3 = new JButton("i"),
+            infoButton4 = new JButton("i");
     public double startingAmount, contributionAmount, returnRate;
-    public int investmentInterval;
+    public int investmentInterval, buttonDimx = 21, buttonDimY = 21;
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
@@ -51,6 +55,15 @@ public class ResultWindow implements ActionListener {
         textField.setEditable(false);
         frame.add(textField);
 
+        infoButton1.setBounds(613, 540, buttonDimx, buttonDimY);
+        infoButton1.setToolTipText("<html>"
+                + "This is the value of the total contributions <br>"
+                + "that you had over the investment period."
+                + "<html>");
+        infoButton1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton1.setFocusable(false);
+        frame.add(infoButton1);
+
         label2.setBounds(483, 564, 100, 30);
         frame.add(label2);
 
@@ -59,6 +72,15 @@ public class ResultWindow implements ActionListener {
         textField1.setText(String.format("%.2f",CalculatorWindow.getTotalInterest()));
         textField1.setEditable(false);
         frame.add(textField1);
+
+        infoButton2.setBounds(613, 590, buttonDimx, buttonDimY);
+        infoButton2.setToolTipText("<html>"
+                + "This is the value of the total interest <br>"
+                + "which was accumulated throughout the compound periods ."
+                + "<html>");
+        infoButton2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton2.setFocusable(false);
+        frame.add(infoButton2);
 
         label3.setBounds(483, 614, 100, 30);
         frame.add(label3);
@@ -69,6 +91,16 @@ public class ResultWindow implements ActionListener {
         textField2.setEditable(false);
         frame.add(textField2);
 
+        infoButton3.setBounds(613, 640, buttonDimx, buttonDimY);
+        infoButton3.setToolTipText("<html>"
+                + "This is the value of the total investment <br>"
+                + "which is composed from the starting amount, <br>"
+                + "accumulated interest, and contribution amount."
+                + "<html>");
+        infoButton3.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton3.setFocusable(false);
+        frame.add(infoButton3);
+
         label4.setBounds(483, 664, 300, 30);
         frame.add(label4);
 
@@ -77,6 +109,16 @@ public class ResultWindow implements ActionListener {
         textField3.setText(String.format("%.2f",CalculatorWindow.getROI()));
         textField3.setEditable(false);
         frame.add(textField3);
+
+        infoButton4.setBounds(613, 690, buttonDimx, buttonDimY);
+        infoButton4.setToolTipText("<html>"
+                + "This is the value of the return on investment <br>"
+                + "which is the final value of the final investment divided <br>."
+                + "by the starting amount and accumulated interest"
+                + "<html>");
+        infoButton4.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
+        infoButton4.setFocusable(false);
+        frame.add(infoButton4);
 
         goBackToCalculator.setBounds(907, 564, 150, 30);
         goBackToCalculator.setFocusable(false);

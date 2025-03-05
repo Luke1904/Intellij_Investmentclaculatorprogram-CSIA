@@ -22,12 +22,12 @@ public class CalculatorWindow implements ActionListener {
     public JRadioButton option1 = new JRadioButton("beginning"), option2 = new JRadioButton("end"), option3 = new JRadioButton("month"), option4 = new JRadioButton("year");
     public ButtonGroup group = new ButtonGroup(), group1 = new ButtonGroup();
     public JLabel label1 = new JLabel("Investment Calculator"),
-            label2 = new JLabel("Starting Amount"),
-            label3 = new JLabel("Contribution Amount"),
+            label2 = new JLabel("Starting Amount ($)"),
+            label3 = new JLabel("Contribution Amount ($)"),
             label4 = new JLabel("Choose Compound Rate"),
-            label5 = new JLabel("Choose Return Rate"),
+            label5 = new JLabel("Choose Return Rate (%)"),
             label6 = new JLabel("Choose when to contribute"),
-            label7 = new JLabel("Choose Investment Period"),
+            label7 = new JLabel("Choose Investment Period (years)"),
             outputLabel = new JLabel(),
             outputLabel1 = new JLabel(),
             outputLabel2 = new JLabel(),
@@ -49,7 +49,7 @@ public class CalculatorWindow implements ActionListener {
     public static double totalContribution;
     public static double totalInterest;
     public static double totalInvestment;
-    public int investmentInterval;
+    public int investmentInterval, buttonDimx = 21, buttonDimY = 21;
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
@@ -72,7 +72,14 @@ public class CalculatorWindow implements ActionListener {
         option1.setVisible(false);
         option2.setVisible(false);
 
-        infoButton6.setBounds(730, 590, 20, 20);
+        infoButton6.setBounds(730, 590, buttonDimx, buttonDimY);
+        infoButton6.setToolTipText("<html>"
+                + "This tells you the time you will want to contribute <br>"
+                + "between the beginning or end of a time period. <br>"
+                + "By contributing at the beginning of the time period, <br>"
+                + "more money will be added compared to contributing at the end. <br>"
+                + "Choose only one of the 2"
+                + "<html>");
         infoButton6.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         infoButton6.setFocusable(false);
         infoButton6.setVisible(false);
@@ -89,7 +96,15 @@ public class CalculatorWindow implements ActionListener {
         option3.setVisible(false);
         option4.setVisible(false);
 
-        infoButton7.setBounds(730, 630, 20, 20);
+        infoButton7.setBounds(730, 630, buttonDimx, buttonDimY);
+        infoButton7.setToolTipText("<html>"
+                + "This tells you the time you <br>"
+                + "will want to contribute <br>"
+                + "between monthly or yearly. <br>"
+                + "By contributing each month you will add more value to the overall <br>"
+                + "investment, then if you contributed each year <br>"
+                + "Choose only one of the 2"
+                + "<html>");
         infoButton7.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         infoButton7.setFocusable(false);
         infoButton7.setVisible(false);
@@ -105,7 +120,16 @@ public class CalculatorWindow implements ActionListener {
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
-        infoButton5.setBounds(800, 520, 20, 20);
+        infoButton5.setBounds(800, 520, buttonDimx, buttonDimY);
+        infoButton5.setToolTipText("<html>"
+                + "This is the compound rate which shows how <br>"
+                + "often the return rate will be applied. <br>"
+                + "A more frequent period will result <br>"
+                + "in more money being added to the final investment. <br>"
+                + "Monthly means the return rate will be applied every month, <br>"
+                + "quarterly every 4 months, semi-annually every 6 months, <br>"
+                + "and yearly every 12 months"
+                + "<html>");
         infoButton5.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         infoButton5.setFocusable(false);
         frame.add(infoButton5);
@@ -114,9 +138,15 @@ public class CalculatorWindow implements ActionListener {
         textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField);
 
-        infoButton1.setBounds(620, 240, 20, 20);
+        infoButton1.setBounds(620, 240, buttonDimx, buttonDimY);
         infoButton1.setFocusable(false);
-        infoButton1.setToolTipText("Hello");
+        infoButton1.setToolTipText("<html>"
+                + "This is the initial amount that you invest. <br>"
+                + "Any other personal additions to the investment <br>"
+                + "will be counted as contributions. <br>"
+                + "Please add only natural (120000) and <br>"
+                + "decimal numbers (120.32)."
+                + "<html>");
         infoButton1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(infoButton1);
 
@@ -124,8 +154,15 @@ public class CalculatorWindow implements ActionListener {
         textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField1);
 
-        infoButton2.setBounds(620, 310, 20, 20);
+        infoButton2.setBounds(620, 310, buttonDimx, buttonDimY);
         infoButton2.setFocusable(false);
+        infoButton2.setToolTipText("<html>"
+                + "This is the contribution amount or the money that you add <br>"
+                + "to the investment after the initial amount. The more money <br>"
+                + "you will add throughout the investment's lifespan, the higher <br>"
+                + "the value of the total investment. Please add only natural (120000) <br>"
+                + "Please add only natural (120000) and decimal numbers (120.32)."
+                + "</html>");
         infoButton2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(infoButton2);
 
@@ -133,7 +170,13 @@ public class CalculatorWindow implements ActionListener {
         textField2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField2);
 
-        infoButton3.setBounds(620, 380, 20, 20);
+        infoButton3.setBounds(620, 380, buttonDimx, buttonDimY);
+        infoButton3.setToolTipText("<html>"
+                + "This is the return rate which shows what percentage <br>"
+                + "of the investment at a specific time will be added <br>"
+                + "to the total value of the investment.<br>"
+                + "Please add only natural (12) and decimal numbers (1.3)"
+                + "<html>");
         infoButton3.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         infoButton3.setFocusable(false);
         frame.add(infoButton3);
@@ -142,14 +185,19 @@ public class CalculatorWindow implements ActionListener {
         textField3.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField3);
 
-        infoButton4.setBounds(620, 450, 20, 20);
+        infoButton4.setBounds(620, 450, buttonDimx, buttonDimY);
+        infoButton4.setToolTipText("<html>"
+                + "This is the period in which the investment evolves. <br>"
+                + "The more time you allocate for the investment, the <br>"
+                + "more it will compound over time. Please add only natural <br>"
+                + "numbers (12)."
+                + "<html>");
         infoButton4.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         infoButton4.setFocusable(false);
         frame.add(infoButton4);
 
         String[] timeInterval = {"monthly", "quarterly", "semi-annually", "annually"};
         dropdown1 = new JComboBox<>(timeInterval);
-        dropdown1.setToolTipText("Compound Rate");
         dropdown1.setBounds(489, 514, 200, 30);
         dropdown1.setBackground(new Color(203, 203, 203));
         dropdown1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
