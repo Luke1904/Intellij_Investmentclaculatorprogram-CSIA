@@ -1,11 +1,13 @@
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieToolTipGenerator;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.NumberFormat;
 
 public class InvestmentPieChart {
     public InvestmentPieChart() {
@@ -14,16 +16,16 @@ public class InvestmentPieChart {
     public static JFreeChart createChart() {
         DefaultPieDataset dataset = createDataset();
 
-        // Create the pie chart
+
         JFreeChart chart = ChartFactory.createPieChart(
-                "Investment Breakdown",  // Chart title
-                dataset,                  // Dataset
-                true,                      // Include legend
-                true,                      // Tooltips
-                false                      // URLs
+                "Investment Breakdown",
+                dataset,
+                true,
+                true,
+                false
         );
 
-        // Customize plot
+
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setBackgroundPaint(UIManager.getColor("Panel.background"));
         plot.setSectionPaint("Starting Amount", new Color(55, 125, 255));
@@ -31,13 +33,15 @@ public class InvestmentPieChart {
         plot.setSectionPaint("Interest", new Color(170, 0, 0));
         plot.setSimpleLabels(true);
 
+        plot.setToolTipGenerator(new StandardPieToolTipGenerator("{0}: {2}", NumberFormat.getNumberInstance(), NumberFormat.getPercentInstance()));
+
         return chart;
     }
 
     public static DefaultPieDataset createDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
 
-        // Sample values (Modify as needed)
+
         double startingAmount = CalculatorWindow.getStartingAmount();
         double contributions = CalculatorWindow.getTotalContribution();
         double interest = CalculatorWindow.getTotalInterest();

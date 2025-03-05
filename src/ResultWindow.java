@@ -42,10 +42,11 @@ public class ResultWindow implements ActionListener {
         label.setFont(new Font("Arial", Font.BOLD, 24));
         frame.add(label);
 
-        label1.setBounds(483, 514, 100, 30);
+        label1.setBounds(483, 514, 200, 30);
         frame.add(label1);
 
         textField.setBounds(483, 540, 100, 20);
+        textField.setCaretColor(new Color(0, 0, 0, 0));
         textField.setText(String.format("%.2f",CalculatorWindow.getTotalContribution()));
         textField.setEditable(false);
         frame.add(textField);
@@ -54,6 +55,7 @@ public class ResultWindow implements ActionListener {
         frame.add(label2);
 
         textField1.setBounds(483, 590, 100, 20);
+        textField1.setCaretColor(new Color(0, 0, 0, 0));
         textField1.setText(String.format("%.2f",CalculatorWindow.getTotalInterest()));
         textField1.setEditable(false);
         frame.add(textField1);
@@ -62,6 +64,7 @@ public class ResultWindow implements ActionListener {
         frame.add(label3);
 
         textField2.setBounds(483, 640, 100, 20);
+        textField2.setCaretColor(new Color(0, 0, 0, 0));
         textField2.setText(String.format("%.2f",CalculatorWindow.getTotalInvestment()));
         textField2.setEditable(false);
         frame.add(textField2);
@@ -70,6 +73,7 @@ public class ResultWindow implements ActionListener {
         frame.add(label4);
 
         textField3.setBounds(483, 690, 100, 20);
+        textField3.setCaretColor(new Color(0, 0, 0, 0));
         textField3.setText(String.format("%.2f",CalculatorWindow.getROI()));
         textField3.setEditable(false);
         frame.add(textField3);

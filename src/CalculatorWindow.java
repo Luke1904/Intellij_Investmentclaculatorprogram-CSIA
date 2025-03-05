@@ -105,7 +105,7 @@ public class CalculatorWindow implements ActionListener {
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
-        infoButton5.setBounds(800, 514, 20, 20);
+        infoButton5.setBounds(800, 520, 20, 20);
         infoButton5.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         infoButton5.setFocusable(false);
         frame.add(infoButton5);
@@ -116,6 +116,7 @@ public class CalculatorWindow implements ActionListener {
 
         infoButton1.setBounds(620, 240, 20, 20);
         infoButton1.setFocusable(false);
+        infoButton1.setToolTipText("Hello");
         infoButton1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(infoButton1);
 
@@ -285,12 +286,17 @@ public class CalculatorWindow implements ActionListener {
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
-            } else if (input.charAt(0) == '0' && input.length() > 1) {
+            } else if (input.charAt(0) == '0' && input.length() > 1 && input.charAt(1) != '.') {
                 infoButton1.setVisible(false);
                 textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel.setText("Please enter a valid number.");
                 isInputValid = false;
-            }else {
+            } else if (isAllZero(input)) {
+                infoButton1.setVisible(false);
+                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else {
                 infoButton1.setVisible(true);
                 startingAmount = Double.parseDouble(input);
                 isValid = true;
@@ -311,8 +317,13 @@ public class CalculatorWindow implements ActionListener {
                 isInputValid = false;
             } else if (input1.charAt(0) == '0' && input1.length() > 1) {
                 infoButton2.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
+                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel1.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (isAllZero(input1)) {
+                infoButton2.setVisible(false);
+                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel1.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
                 infoButton2.setVisible(true);
@@ -335,13 +346,18 @@ public class CalculatorWindow implements ActionListener {
                 isInputValid = false;
             } else if (input2.length() > 8) {
                 infoButton3.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
+                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel4.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input2.charAt(0) == '0' && input2.length() > 1) {
                 infoButton3.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
+                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel4.setText("Please enter a valid number.");
+                isInputValid = false;
+            } else if (isAllZero(input2)) {
+                infoButton3.setVisible(false);
+                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel4.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
                 infoButton3.setVisible(true);
@@ -357,20 +373,20 @@ public class CalculatorWindow implements ActionListener {
                 textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel6.setText("Input cannot be empty.");
                 isInputValid = false;
-            } else if (!input3.matches("-?\\d+(\\.\\d+)?")) {
+            } else if (!input3.matches("\\d+")) {
                 infoButton4.setVisible(false);
                 textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 outputLabel6.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input3.length() > 8) {
                 infoButton4.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
+                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel6.setText("Please enter a valid number.");
                 isInputValid = false;
             } else if (input3.charAt(0) == '0' && input3.length() > 1) {
                 infoButton4.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
+                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                outputLabel6.setText("Please enter a valid number.");
                 isInputValid = false;
             } else {
                 infoButton4.setVisible(true);
@@ -430,6 +446,7 @@ public class CalculatorWindow implements ActionListener {
                 return false;
             }
         }
+
 
     public int getCompoundRate(){
         if(Objects.equals(selectedOption1, "monthly")){
@@ -498,6 +515,10 @@ public class CalculatorWindow implements ActionListener {
         return ROI;
     }
 
+    public static boolean isAllZero(String input) {
+        input.replace(".", "").replace("-", "");
+        return input.chars().allMatch(ch -> ch == '0');
+    }
 
 
     @Override
