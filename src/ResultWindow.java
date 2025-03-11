@@ -16,7 +16,7 @@ public class ResultWindow implements ActionListener {
     JLabel label = new JLabel("Results"), label1 = new JLabel("Total contributions"),
             label2 = new JLabel("Total interest"),
             label3 = new JLabel("Total investment"),
-            label4 = new JLabel("Total ROI");
+            label4 = new JLabel("ROI");
     JTextField textField = new JTextField(),
             textField1 = new JTextField(),
             textField2 = new JTextField(),

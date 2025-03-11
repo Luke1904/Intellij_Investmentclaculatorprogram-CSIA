@@ -24,7 +24,7 @@ public class CalculatorWindow implements ActionListener {
     public JLabel label1 = new JLabel("Investment Calculator"),
             label2 = new JLabel("Starting Amount ($)"),
             label3 = new JLabel("Contribution Amount ($)"),
-            label4 = new JLabel("Choose Compound Rate"),
+            label4 = new JLabel("Choose Compound Rate (%)"),
             label5 = new JLabel("Choose Return Rate (%)"),
             label6 = new JLabel("Choose when to contribute"),
             label7 = new JLabel("Choose Investment Period (years)"),
