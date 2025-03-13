@@ -8,9 +8,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 public class ResultWindow implements ActionListener {
 
+    // Declare GUI components
     JFrame frame = new JFrame();
     JPanel panel = new LinePanel();
     JLabel label = new JLabel("Results"), label1 = new JLabel("Total contributions"),
@@ -31,7 +31,8 @@ public class ResultWindow implements ActionListener {
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
-    ResultWindow(double startingAmount, double contributionAmount, double returnRate, int investmentInterval, String selectedOption1, String selectedOption2, String selectedOption3, double[] values){
+    // Constructor to initialize the result window
+    ResultWindow(double startingAmount, double contributionAmount, double returnRate, int investmentInterval, String selectedOption1, String selectedOption2, String selectedOption3, double[] values) {
         Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
         this.startingAmount = startingAmount;
         this.contributionAmount = contributionAmount;
@@ -42,19 +43,22 @@ public class ResultWindow implements ActionListener {
         this.selectedOption3 = selectedOption3;
         this.values = values;
 
+        // Set up the main label for the results
         label.setBounds(711, 146, 300, 40);
         label.setFont(new Font("Arial", Font.BOLD, 24));
         frame.add(label);
 
+        // Set up label and text field for total contributions
         label1.setBounds(483, 514, 200, 30);
         frame.add(label1);
 
         textField.setBounds(483, 540, 100, 20);
         textField.setCaretColor(new Color(0, 0, 0, 0));
-        textField.setText(String.format("%.2f",CalculatorWindow.getTotalContribution()) + "$");
+        textField.setText(String.format("%.2f", CalculatorWindow.getTotalContribution()) + "$");
         textField.setEditable(false);
         frame.add(textField);
 
+        // Set up info button for total contributions
         infoButton1.setBounds(613, 540, buttonDimx, buttonDimY);
         infoButton1.setToolTipText("<html>"
                 + "This is the value of the total contributions <br>"
@@ -64,15 +68,17 @@ public class ResultWindow implements ActionListener {
         infoButton1.setFocusable(false);
         frame.add(infoButton1);
 
+        // Set up label and text field for total interest
         label2.setBounds(483, 564, 100, 30);
         frame.add(label2);
 
         textField1.setBounds(483, 590, 100, 20);
         textField1.setCaretColor(new Color(0, 0, 0, 0));
-        textField1.setText(String.format("%.2f",CalculatorWindow.getTotalInterest()) + "$");
+        textField1.setText(String.format("%.2f", CalculatorWindow.getTotalInterest()) + "$");
         textField1.setEditable(false);
         frame.add(textField1);
 
+        // Set up info button for total interest
         infoButton2.setBounds(613, 590, buttonDimx, buttonDimY);
         infoButton2.setToolTipText("<html>"
                 + "This is the value of the total interest <br>"
@@ -82,15 +88,17 @@ public class ResultWindow implements ActionListener {
         infoButton2.setFocusable(false);
         frame.add(infoButton2);
 
+        // Set up label and text field for total investment
         label3.setBounds(483, 614, 100, 30);
         frame.add(label3);
 
         textField2.setBounds(483, 640, 100, 20);
         textField2.setCaretColor(new Color(0, 0, 0, 0));
-        textField2.setText(String.format("%.2f",CalculatorWindow.getTotalInvestment()) + "$");
+        textField2.setText(String.format("%.2f", CalculatorWindow.getTotalInvestment()) + "$");
         textField2.setEditable(false);
         frame.add(textField2);
 
+        // Set up info button for total investment
         infoButton3.setBounds(613, 640, buttonDimx, buttonDimY);
         infoButton3.setToolTipText("<html>"
                 + "This is the value of the total investment <br>"
@@ -101,15 +109,17 @@ public class ResultWindow implements ActionListener {
         infoButton3.setFocusable(false);
         frame.add(infoButton3);
 
+        // Set up label and text field for ROI
         label4.setBounds(483, 664, 300, 30);
         frame.add(label4);
 
         textField3.setBounds(483, 690, 100, 20);
         textField3.setCaretColor(new Color(0, 0, 0, 0));
-        textField3.setText(String.format("%.2f",CalculatorWindow.getROI()) + "%");
+        textField3.setText(String.format("%.2f", CalculatorWindow.getROI()) + "%");
         textField3.setEditable(false);
         frame.add(textField3);
 
+        // Set up info button for ROI
         infoButton4.setBounds(613, 690, buttonDimx, buttonDimY);
         infoButton4.setToolTipText("<html>"
                 + "This is the value of the return on investment <br>"
@@ -120,16 +130,19 @@ public class ResultWindow implements ActionListener {
         infoButton4.setFocusable(false);
         frame.add(infoButton4);
 
+        // Set up button to go back to the calculator
         goBackToCalculator.setBounds(907, 564, 150, 30);
         goBackToCalculator.setFocusable(false);
         goBackToCalculator.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(goBackToCalculator);
 
+        // Set up button to create a save file
         createSave.setBounds(917, 514, 130, 30);
         createSave.setFocusable(false);
         createSave.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(createSave);
 
+        // Set up the main frame
         frame.setLayout(null);
         frame.setFocusable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -138,17 +151,19 @@ public class ResultWindow implements ActionListener {
         frame.setTitle("Result Window");
         frame.getContentPane().setBackground(new Color(203, 203, 203));
 
+        // Add the investment growth chart to the frame
         ChartPanel s = InvestmentGrowthChart.getChartPanel();
         s.setBackground(UIManager.getColor("Panel.background"));
         s.setBounds(450, 247, 250, 200);
         frame.add(s);
 
+        // Add the investment pie chart to the frame
         ChartPanel p = InvestmentPieChart.getChartPanel();
         p.setBackground(UIManager.getColor("Panel.background"));
         p.setBounds(820, 247, 240, 180);
         frame.add(p);
 
-
+        // Action listener for the create save button
         createSave.addActionListener(e -> {
             String directory = "X:\\Saves\\";
             String baseFileName = "investment_data";
@@ -156,13 +171,14 @@ public class ResultWindow implements ActionListener {
             File file;
             int counter = 0;
 
+            // Generate a unique file name
             do {
                 String fileName = baseFileName + (counter == 0 ? "" : counter) + extension;
                 file = new File(directory + fileName);
                 counter++;
             } while (file.exists());
 
-
+            // Write the investment data to the file
             try {
                 FileWriter writer = new FileWriter(file);
                 writer.write("Starting Amount: " + String.format("%.2f", this.startingAmount) + "$" + "\n");
@@ -180,24 +196,22 @@ public class ResultWindow implements ActionListener {
             } catch (IOException a) {
                 a.printStackTrace();
             }
-
         });
 
-        goBackToCalculator.addActionListener(e ->{
+        // Action listener for the go back to calculator button
+        goBackToCalculator.addActionListener(e -> {
             frame.dispose();
             CalculatorWindow calculatorWindow = new CalculatorWindow();
         });
 
-
-
+        // Set up the main panel
         panel.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
         frame.add(panel);
-
     }
 
+    // ActionListener implementation
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 }

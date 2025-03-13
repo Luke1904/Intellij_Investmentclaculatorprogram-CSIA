@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
 
-
+    // Declare GUI components
     public JFrame frame = new JFrame("Investment Calculator");
     public JButton resetButton = new JButton("reset"),
             calc_Button = new JButton("Calculate"),
@@ -53,14 +53,17 @@ public class CalculatorWindow implements ActionListener {
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
+    // Constructor to initialize the calculator window
     public CalculatorWindow() {
         Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
 
+        // Set up the main frame
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.getContentPane().setBackground(new Color(203, 203, 203));
 
+        // Set up radio buttons for contribution timing (beginning or end)
         option1.setBounds(490, 590, 100, 20);
         option1.setFocusable(false);
         option2.setBounds(600, 590, 100, 20);
@@ -72,6 +75,7 @@ public class CalculatorWindow implements ActionListener {
         option1.setVisible(false);
         option2.setVisible(false);
 
+        // Set up info button for contribution timing
         infoButton6.setBounds(730, 590, buttonDimx, buttonDimY);
         infoButton6.setToolTipText("<html>"
                 + "This tells you the time you will want to contribute <br>"
@@ -85,6 +89,7 @@ public class CalculatorWindow implements ActionListener {
         infoButton6.setVisible(false);
         frame.add(infoButton6);
 
+        // Set up radio buttons for contribution frequency (monthly or yearly)
         option3.setBounds(490, 630, 100, 20);
         option3.setFocusable(false);
         option4.setBounds(600, 630, 100, 20);
@@ -96,6 +101,7 @@ public class CalculatorWindow implements ActionListener {
         option3.setVisible(false);
         option4.setVisible(false);
 
+        // Set up info button for contribution frequency
         infoButton7.setBounds(730, 630, buttonDimx, buttonDimY);
         infoButton7.setToolTipText("<html>"
                 + "This tells you the time you <br>"
@@ -110,16 +116,19 @@ public class CalculatorWindow implements ActionListener {
         infoButton7.setVisible(false);
         frame.add(infoButton7);
 
+        // Set up label for contribution timing
         label6.setBounds(490, 550, 200, 30);
         label6.setVisible(false);
         frame.add(label6);
 
+        // Set up reset button
         resetButton.setBounds(700, 514, 70, 30);
         resetButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(resetButton);
         resetButton.setFocusable(false);
         resetButton.setVisible(true);
 
+        // Set up info button for compound rate
         infoButton5.setBounds(800, 520, buttonDimx, buttonDimY);
         infoButton5.setToolTipText("<html>"
                 + "This is the compound rate which shows how <br>"
@@ -134,10 +143,12 @@ public class CalculatorWindow implements ActionListener {
         infoButton5.setFocusable(false);
         frame.add(infoButton5);
 
+        // Set up text field for starting amount
         textField.setBounds(490, 240, 100, 20);
         textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField);
 
+        // Set up info button for starting amount
         infoButton1.setBounds(620, 240, buttonDimx, buttonDimY);
         infoButton1.setFocusable(false);
         infoButton1.setToolTipText("<html>"
@@ -150,10 +161,12 @@ public class CalculatorWindow implements ActionListener {
         infoButton1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(infoButton1);
 
+        // Set up text field for contribution amount
         textField1.setBounds(490, 310, 100, 20);
         textField1.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField1);
 
+        // Set up info button for contribution amount
         infoButton2.setBounds(620, 310, buttonDimx, buttonDimY);
         infoButton2.setFocusable(false);
         infoButton2.setToolTipText("<html>"
@@ -166,10 +179,12 @@ public class CalculatorWindow implements ActionListener {
         infoButton2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(infoButton2);
 
+        // Set up text field for return rate
         textField2.setBounds(490, 380, 100, 20);
         textField2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField2);
 
+        // Set up info button for return rate
         infoButton3.setBounds(620, 380, buttonDimx, buttonDimY);
         infoButton3.setToolTipText("<html>"
                 + "This is the return rate which shows what percentage <br>"
@@ -181,10 +196,12 @@ public class CalculatorWindow implements ActionListener {
         infoButton3.setFocusable(false);
         frame.add(infoButton3);
 
+        // Set up text field for investment period
         textField3.setBounds(490, 450, 100, 20);
         textField3.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createLineBorder(Color.gray)));
         frame.add(textField3);
 
+        // Set up info button for investment period
         infoButton4.setBounds(620, 450, buttonDimx, buttonDimY);
         infoButton4.setToolTipText("<html>"
                 + "This is the period in which the investment evolves. <br>"
@@ -196,6 +213,7 @@ public class CalculatorWindow implements ActionListener {
         infoButton4.setFocusable(false);
         frame.add(infoButton4);
 
+        // Set up dropdown for compound rate interval
         String[] timeInterval = {"monthly", "quarterly", "semi-annually", "annually"};
         dropdown1 = new JComboBox<>(timeInterval);
         dropdown1.setBounds(489, 514, 200, 30);
@@ -217,6 +235,7 @@ public class CalculatorWindow implements ActionListener {
             }
         });
 
+        // Set up reset button action listener
         resetButton.addActionListener(e -> {
             infoButton6.setVisible(false);
             infoButton7.setVisible(false);
@@ -232,10 +251,12 @@ public class CalculatorWindow implements ActionListener {
             option4.setVisible(false);
         });
 
+        // Set up main label for the calculator
         label1.setBounds(ss.width / 2 - 125, 125, 300, 40);
         label1.setFont(new Font("Arial", Font.BOLD, 24));
         frame.add(label1);
 
+        // Set up labels for input fields
         label2.setBounds(489, 200, 200, 30);
         frame.add(label2);
 
@@ -251,12 +272,14 @@ public class CalculatorWindow implements ActionListener {
         label7.setBounds(489, 410, 200, 30);
         frame.add(label7);
 
+        // Set up calculate button
         calc_Button.setBounds(489, 704, 100, 30);
         calc_Button.addActionListener(this);
         calc_Button.setFocusable(false);
         calc_Button.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(calc_Button);
 
+        // Set up return button
         returnButton.setBounds(441, 118, 20, 15);
         returnButton.addActionListener(this);
         returnButton.setText("←");
@@ -265,6 +288,7 @@ public class CalculatorWindow implements ActionListener {
         returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         frame.add(returnButton);
 
+        // Set up output labels for error messages
         outputLabel.setBounds(604, 240, 500, 20);
         outputLabel.setForeground(Color.red);
         frame.add(outputLabel);
@@ -293,17 +317,21 @@ public class CalculatorWindow implements ActionListener {
         outputLabel6.setForeground(Color.red);
         frame.add(outputLabel6);
 
+        // Set up main panel
         panel1.setBounds(ss.width / 2 - 350, ss.height / 2 - 350, 700, 700);
         panel1.setBorder(BorderFactory.createLineBorder(Color.black));
         frame.add(panel1);
 
+        // Make the frame visible
         frame.setVisible(true);
 
+        // Set up return button action listener
         returnButton.addActionListener(e -> {
             frame.dispose();
             MainMenu menu = new MainMenu();
         });
 
+        // Set up calculate button action listener
         calc_Button.addActionListener(e -> {
             if (validateTextFieldsAndDropDowns()) {
                 frame.dispose();
@@ -315,185 +343,191 @@ public class CalculatorWindow implements ActionListener {
         });
     }
 
-        public boolean validateTextFieldsAndDropDowns (){
-            boolean isInputValid = true, isValid = false, isValid1 = false, isValid2 = false, isValid3 = false, isValidForTextFields = false;
-            String input = textField.getText();
+    // Method to validate input fields and dropdown selections
+    public boolean validateTextFieldsAndDropDowns (){
+        boolean isInputValid = true, isValid = false, isValid1 = false, isValid2 = false, isValid3 = false, isValidForTextFields = false;
+        String input = textField.getText();
 
-            if (input.isEmpty()) {
-                infoButton1.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Input cannot be empty.");
-                isInputValid = false;
-            } else if (!input.matches("-?\\d+(\\.\\d+)?")) {
-                infoButton1.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (input.length() > 8) {
-                infoButton1.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (input.charAt(0) == '0' && input.length() > 1 && input.charAt(1) != '.') {
-                infoButton1.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (isAllZero(input)) {
-                infoButton1.setVisible(false);
-                textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else {
-                infoButton1.setVisible(true);
-                startingAmount = Double.parseDouble(input);
-                isValid = true;
-                textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                outputLabel.setText("");
-            }
-
-            String input1 = textField1.getText();
-            if (input1.isEmpty()) {
-                infoButton2.setVisible(false);
-                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel1.setText("Input cannot be empty.");
-                isInputValid = false;
-            } else if (!input1.matches("-?\\d+(\\.\\d+)?")) {
-                infoButton2.setVisible(false);
-                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel1.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (input1.charAt(0) == '0' && input1.length() > 1) {
-                infoButton2.setVisible(false);
-                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel1.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (isAllZero(input1)) {
-                infoButton2.setVisible(false);
-                textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel1.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else {
-                infoButton2.setVisible(true);
-                contributionAmount = Double.parseDouble(input1);
-                isValid1 = true;
-                textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                outputLabel1.setText("");
-            }
-
-            String input2 = textField2.getText();
-            if (input2.isEmpty()) {
-                infoButton3.setVisible(false);
-                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel4.setText("Input cannot be empty.");
-                isInputValid = false;
-            } else if (!input2.matches("-?\\d+(\\.\\d+)?")) {
-                infoButton3.setVisible(false);
-                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel4.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (input2.length() > 8) {
-                infoButton3.setVisible(false);
-                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel4.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (input2.charAt(0) == '0' && input2.length() > 1) {
-                infoButton3.setVisible(false);
-                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel4.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (isAllZero(input2)) {
-                infoButton3.setVisible(false);
-                textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel4.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else {
-                infoButton3.setVisible(true);
-                returnRate = Double.parseDouble(input2);
-                isValid2 = true;
-                textField2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                outputLabel4.setText("");
-            }
-
-            String input3 = textField3.getText();
-            if (input3.isEmpty()) {
-                infoButton4.setVisible(false);
-                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel6.setText("Input cannot be empty.");
-                isInputValid = false;
-            } else if (!input3.matches("\\d+")) {
-                infoButton4.setVisible(false);
-                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel6.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (input3.length() > 8) {
-                infoButton4.setVisible(false);
-                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel6.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else if (input3.charAt(0) == '0' && input3.length() > 1) {
-                infoButton4.setVisible(false);
-                textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-                outputLabel6.setText("Please enter a valid number.");
-                isInputValid = false;
-            } else {
-                infoButton4.setVisible(true);
-                investmentInterval = Integer.parseInt(input3);
-                isValid3 = true;
-                textField3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                outputLabel6.setText("");
-            }
-
-            if(isValid && isValid1 && isValid2 && isValid3 && isInputValid){
-                isValidForTextFields = true;
-            }
-            boolean valid1 = false, valid2 = false, valid3 = false, isValidForDropDown = false;
-            if(option1IsSelected){
-                infoButton5.setVisible(true);
-                valid1 = true;
-                outputLabel2.setText("");
-            } else {
-                infoButton5.setVisible(false);
-                outputLabel2.setText("Select an interval");
-            }
-            if(valid1 && group.getSelection() == null){
-                infoButton6.setVisible(false);
-                outputLabel3.setText("Choose beginning or end");
-            } else if (valid1 && group.getSelection() != null) {
-                infoButton5.setVisible(true);
-                valid2 = true;
-                outputLabel3.setText("");
-                if(option1.isSelected()){
-                    selectedOption2 = option1.getText();
-                } else if (option2.isSelected()) {
-                    selectedOption2 = option2.getText();
-                }
-            }
-            if(valid1 && group1.getSelection() == null){
-                infoButton7.setVisible(false);
-                outputLabel5.setText("Choose month or year");
-            } else if (valid1 && group1.getSelection() != null){
-                infoButton7.setVisible(true);
-                valid3 = true;
-                outputLabel5.setText("");
-                if(option3.isSelected()){
-                    selectedOption3 = option3.getText();
-                } else if (option4.isSelected()) {
-                    selectedOption3 = option4.getText();
-                }
-            }
-            if(valid1 && valid2 && valid3){
-                isValidForDropDown = true;
-            }
-            if(isValidForDropDown && isValidForTextFields){
-                return true;
-            }
-            else {
-                return false;
-            }
+        // Validate starting amount input
+        if (input.isEmpty()) {
+            infoButton1.setVisible(false);
+            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input.matches("-?\\d+(\\.\\d+)?")) {
+            infoButton1.setVisible(false);
+            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (input.length() > 8) {
+            infoButton1.setVisible(false);
+            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (input.charAt(0) == '0' && input.length() > 1 && input.charAt(1) != '.') {
+            infoButton1.setVisible(false);
+            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (isAllZero(input)) {
+            infoButton1.setVisible(false);
+            textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            infoButton1.setVisible(true);
+            startingAmount = Double.parseDouble(input);
+            isValid = true;
+            textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel.setText("");
         }
 
+        // Validate contribution amount input
+        String input1 = textField1.getText();
+        if (input1.isEmpty()) {
+            infoButton2.setVisible(false);
+            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel1.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input1.matches("-?\\d+(\\.\\d+)?")) {
+            infoButton2.setVisible(false);
+            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel1.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (input1.charAt(0) == '0' && input1.length() > 1) {
+            infoButton2.setVisible(false);
+            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel1.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (isAllZero(input1)) {
+            infoButton2.setVisible(false);
+            textField1.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel1.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            infoButton2.setVisible(true);
+            contributionAmount = Double.parseDouble(input1);
+            isValid1 = true;
+            textField1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel1.setText("");
+        }
 
+        // Validate return rate input
+        String input2 = textField2.getText();
+        if (input2.isEmpty()) {
+            infoButton3.setVisible(false);
+            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel4.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input2.matches("-?\\d+(\\.\\d+)?")) {
+            infoButton3.setVisible(false);
+            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel4.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (input2.length() > 8) {
+            infoButton3.setVisible(false);
+            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel4.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (input2.charAt(0) == '0' && input2.length() > 1) {
+            infoButton3.setVisible(false);
+            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel4.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (isAllZero(input2)) {
+            infoButton3.setVisible(false);
+            textField2.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel4.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            infoButton3.setVisible(true);
+            returnRate = Double.parseDouble(input2);
+            isValid2 = true;
+            textField2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel4.setText("");
+        }
+
+        // Validate investment period input
+        String input3 = textField3.getText();
+        if (input3.isEmpty()) {
+            infoButton4.setVisible(false);
+            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel6.setText("Input cannot be empty.");
+            isInputValid = false;
+        } else if (!input3.matches("\\d+")) {
+            infoButton4.setVisible(false);
+            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel6.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (input3.length() > 8) {
+            infoButton4.setVisible(false);
+            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel6.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else if (input3.charAt(0) == '0' && input3.length() > 1) {
+            infoButton4.setVisible(false);
+            textField3.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            outputLabel6.setText("Please enter a valid number.");
+            isInputValid = false;
+        } else {
+            infoButton4.setVisible(true);
+            investmentInterval = Integer.parseInt(input3);
+            isValid3 = true;
+            textField3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            outputLabel6.setText("");
+        }
+
+        // Check if all text fields are valid
+        if(isValid && isValid1 && isValid2 && isValid3 && isInputValid){
+            isValidForTextFields = true;
+        }
+        boolean valid1 = false, valid2 = false, valid3 = false, isValidForDropDown = false;
+        if(option1IsSelected){
+            infoButton5.setVisible(true);
+            valid1 = true;
+            outputLabel2.setText("");
+        } else {
+            infoButton5.setVisible(false);
+            outputLabel2.setText("Select an interval");
+        }
+        if(valid1 && group.getSelection() == null){
+            infoButton6.setVisible(false);
+            outputLabel3.setText("Choose beginning or end");
+        } else if (valid1 && group.getSelection() != null) {
+            infoButton5.setVisible(true);
+            valid2 = true;
+            outputLabel3.setText("");
+            if(option1.isSelected()){
+                selectedOption2 = option1.getText();
+            } else if (option2.isSelected()) {
+                selectedOption2 = option2.getText();
+            }
+        }
+        if(valid1 && group1.getSelection() == null){
+            infoButton7.setVisible(false);
+            outputLabel5.setText("Choose month or year");
+        } else if (valid1 && group1.getSelection() != null){
+            infoButton7.setVisible(true);
+            valid3 = true;
+            outputLabel5.setText("");
+            if(option3.isSelected()){
+                selectedOption3 = option3.getText();
+            } else if (option4.isSelected()) {
+                selectedOption3 = option4.getText();
+            }
+        }
+        if(valid1 && valid2 && valid3){
+            isValidForDropDown = true;
+        }
+        if(isValidForDropDown && isValidForTextFields){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    // Method to get the compound rate based on the selected interval
     public int getCompoundRate(){
         if(Objects.equals(selectedOption1, "monthly")){
             return 12;
@@ -507,6 +541,7 @@ public class CalculatorWindow implements ActionListener {
         return -1;
     }
 
+    // Method to calculate the investment results
     public void calculateResults(){
         double contributionforGrowthChart, interestforGrowthChart;
         values = new double[(int) investmentInterval];
@@ -545,6 +580,8 @@ public class CalculatorWindow implements ActionListener {
             ROI = (values[investmentInterval - 1] / startingAmount) * 100;
         }
     }
+
+    // Getters for investment results
     public static double getStartingAmount(){
         return startingAmount;
     }
@@ -561,19 +598,14 @@ public class CalculatorWindow implements ActionListener {
         return ROI;
     }
 
+    // Method to check if the input string consists of all zeros
     public static boolean isAllZero(String input) {
         input.replace(".", "").replace("-", "");
         return input.chars().allMatch(ch -> ch == '0');
     }
 
-
+    // ActionListener implementation
     @Override
     public void actionPerformed(ActionEvent e) {
     }
 }
-
-
-
-
-
-
