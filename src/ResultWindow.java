@@ -51,7 +51,7 @@ public class ResultWindow implements ActionListener {
 
         textField.setBounds(483, 540, 100, 20);
         textField.setCaretColor(new Color(0, 0, 0, 0));
-        textField.setText(String.format("%.2f",CalculatorWindow.getTotalContribution()));
+        textField.setText(String.format("%.2f",CalculatorWindow.getTotalContribution()) + "$");
         textField.setEditable(false);
         frame.add(textField);
 
@@ -69,7 +69,7 @@ public class ResultWindow implements ActionListener {
 
         textField1.setBounds(483, 590, 100, 20);
         textField1.setCaretColor(new Color(0, 0, 0, 0));
-        textField1.setText(String.format("%.2f",CalculatorWindow.getTotalInterest()));
+        textField1.setText(String.format("%.2f",CalculatorWindow.getTotalInterest()) + "$");
         textField1.setEditable(false);
         frame.add(textField1);
 
@@ -87,7 +87,7 @@ public class ResultWindow implements ActionListener {
 
         textField2.setBounds(483, 640, 100, 20);
         textField2.setCaretColor(new Color(0, 0, 0, 0));
-        textField2.setText(String.format("%.2f",CalculatorWindow.getTotalInvestment()));
+        textField2.setText(String.format("%.2f",CalculatorWindow.getTotalInvestment()) + "$");
         textField2.setEditable(false);
         frame.add(textField2);
 
@@ -106,7 +106,7 @@ public class ResultWindow implements ActionListener {
 
         textField3.setBounds(483, 690, 100, 20);
         textField3.setCaretColor(new Color(0, 0, 0, 0));
-        textField3.setText(String.format("%.2f",CalculatorWindow.getROI()));
+        textField3.setText(String.format("%.2f",CalculatorWindow.getROI()) + "%");
         textField3.setEditable(false);
         frame.add(textField3);
 
@@ -165,17 +165,17 @@ public class ResultWindow implements ActionListener {
 
             try {
                 FileWriter writer = new FileWriter(file);
-                writer.write("Starting Amount: " + String.format("%.2f", this.startingAmount) + "\n");
-                writer.write("Contribution Amount: " + String.format("%.2f", this.contributionAmount) + "\n");
-                writer.write("Return rate: " + String.format("%.2f", this.returnRate) + "\n");
-                writer.write("Investment interval: " + this.investmentInterval + "\n");
+                writer.write("Starting Amount: " + String.format("%.2f", this.startingAmount) + "$" + "\n");
+                writer.write("Contribution Amount: " + String.format("%.2f", this.contributionAmount) + "$" + "\n");
+                writer.write("Return rate: " + String.format("%.2f", this.returnRate) + "%" + "\n");
+                writer.write("Investment interval: " + this.investmentInterval + " years" + "\n");
                 writer.write("Compounding rate: " + this.selectedOption1 + "\n");
                 writer.write("For the first option, you have chosen: " + this.selectedOption2 + "\n");
                 writer.write("For the second option, you have chosen: " + this.selectedOption3 + "\n");
-                writer.write("Total contribution: " + String.format("%.2f", CalculatorWindow.getTotalContribution()) + "\n");
-                writer.write("Total interest: " + String.format("%.2f", CalculatorWindow.getTotalInterest()) + "\n");
-                writer.write("Total investment: " + String.format("%.2f", CalculatorWindow.getTotalInvestment()) + "\n");
-                writer.write("Total Return on Investment: " + String.format("%.2f", CalculatorWindow.getROI()) + "\n");
+                writer.write("Total contribution: " + String.format("%.2f", CalculatorWindow.getTotalContribution()) + "$" + "\n");
+                writer.write("Total interest: " + String.format("%.2f", CalculatorWindow.getTotalInterest()) + "$" + "\n");
+                writer.write("Total investment: " + String.format("%.2f", CalculatorWindow.getTotalInvestment()) + "$" + "\n");
+                writer.write("Total Return on Investment: " + String.format("%.2f", CalculatorWindow.getROI()) + "%" + "\n");
                 writer.close();
             } catch (IOException a) {
                 a.printStackTrace();
