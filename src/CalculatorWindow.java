@@ -482,8 +482,6 @@ public class CalculatorWindow implements ActionListener {
                     selectedOption3 = option4.getText();
                 }
             }
-
-
             if(valid1 && valid2 && valid3){
                 isValidForDropDown = true;
             }
