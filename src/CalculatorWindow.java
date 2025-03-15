@@ -7,20 +7,25 @@ import java.util.Objects;
 
 public class CalculatorWindow implements ActionListener {
 
-    // Declare GUI components
-    public JFrame frame = new JFrame("Investment Calculator");
-    public JButton resetButton = new JButton("reset"),
-            calc_Button = new JButton("Calculate"),
-            returnButton = new JButton(),
-            infoButton1 = new JButton("i"),
-            infoButton2 = new JButton("i"),
-            infoButton3 = new JButton("i"),
-            infoButton4 = new JButton("i"),
-            infoButton5 = new JButton("i"),
-            infoButton6 = new JButton("i"),
-            infoButton7 = new JButton("i");
-    public JRadioButton option1 = new JRadioButton("beginning"), option2 = new JRadioButton("end"), option3 = new JRadioButton("month"), option4 = new JRadioButton("year");
-    public ButtonGroup group = new ButtonGroup(), group1 = new ButtonGroup();
+    // GUI components
+    public JFrame frame = new JFrame("Investment Calculator"); // Main window
+    public JButton resetButton = new JButton("reset"), // Button to reset inputs
+            calc_Button = new JButton("Calculate"), // Button to calculate results
+            returnButton = new JButton(), // Button to return to the main menu
+            infoButton1 = new JButton("i"), // Info button for starting amount
+            infoButton2 = new JButton("i"), // Info button for contribution amount
+            infoButton3 = new JButton("i"), // Info button for return rate
+            infoButton4 = new JButton("i"), // Info button for investment period
+            infoButton5 = new JButton("i"), // Info button for compound rate
+            infoButton6 = new JButton("i"), // Info button for contribution timing
+            infoButton7 = new JButton("i"); // Info button for contribution frequency
+
+    // Radio buttons for contribution timing and frequency
+    public JRadioButton option1 = new JRadioButton("beginning"), option2 = new JRadioButton("end"),
+            option3 = new JRadioButton("month"), option4 = new JRadioButton("year");
+    public ButtonGroup group = new ButtonGroup(), group1 = new ButtonGroup(); // Button groups for radio buttons
+
+    // Labels for UI elements
     public JLabel label1 = new JLabel("Investment Calculator"),
             label2 = new JLabel("Starting Amount ($)"),
             label3 = new JLabel("Contribution Amount ($)"),
@@ -28,19 +33,22 @@ public class CalculatorWindow implements ActionListener {
             label5 = new JLabel("Choose Return Rate (%)"),
             label6 = new JLabel("Choose when to contribute"),
             label7 = new JLabel("Choose Investment Period (years)"),
-            outputLabel = new JLabel(),
+            outputLabel = new JLabel(), // Label for error messages
             outputLabel1 = new JLabel(),
             outputLabel2 = new JLabel(),
             outputLabel3 = new JLabel(),
             outputLabel4 = new JLabel(),
             outputLabel5 = new JLabel(),
             outputLabel6 = new JLabel();
-    public JPanel panel1 = new JPanel();
-    public JTextField textField = new JTextField(),
-            textField1 = new JTextField(),
-            textField2 = new JTextField(),
-            textField3 = new JTextField();
-    public JComboBox<String> dropdown1;
+
+    public JPanel panel1 = new JPanel(); // Main panel for the UI
+    public JTextField textField = new JTextField(), // Text field for starting amount
+            textField1 = new JTextField(), // Text field for contribution amount
+            textField2 = new JTextField(), // Text field for return rate
+            textField3 = new JTextField(); // Text field for investment period
+    public JComboBox<String> dropdown1; // Dropdown for compound rate interval
+
+    // Flags and variables for calculations
     public boolean option1IsSelected = false, pass = true;
     public static double startingAmount;
     public double contributionAmount;
@@ -53,17 +61,17 @@ public class CalculatorWindow implements ActionListener {
     public String selectedOption1, selectedOption2, selectedOption3;
     public double[] values;
 
-    // Constructor to initialize the calculator window
+    // Constructor
     public CalculatorWindow() {
-        Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ss = Toolkit.getDefaultToolkit().getScreenSize(); // Get screen size for dynamic positioning
 
         // Set up the main frame
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
-        frame.getContentPane().setBackground(new Color(203, 203, 203));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize the window
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the program when the window is closed
+        frame.setLayout(null); // Use absolute positioning
+        frame.getContentPane().setBackground(new Color(203, 203, 203)); // Set background color
 
-        // Set up radio buttons for contribution timing (beginning or end)
+        // Set up radio buttons for contribution timing
         option1.setBounds(490, 590, 100, 20);
         option1.setFocusable(false);
         option2.setBounds(600, 590, 100, 20);
@@ -89,7 +97,7 @@ public class CalculatorWindow implements ActionListener {
         infoButton6.setVisible(false);
         frame.add(infoButton6);
 
-        // Set up radio buttons for contribution frequency (monthly or yearly)
+        // Set up radio buttons for contribution frequency
         option3.setBounds(490, 630, 100, 20);
         option3.setFocusable(false);
         option4.setBounds(600, 630, 100, 20);
@@ -343,12 +351,12 @@ public class CalculatorWindow implements ActionListener {
         });
     }
 
-    // Method to validate input fields and dropdown selections
+    // Method to validate input fields and dropdowns
     public boolean validateTextFieldsAndDropDowns (){
         boolean isInputValid = true, isValid = false, isValid1 = false, isValid2 = false, isValid3 = false, isValidForTextFields = false;
         String input = textField.getText();
 
-        // Validate starting amount input
+        // Validate starting amount
         if (input.isEmpty()) {
             infoButton1.setVisible(false);
             textField.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -382,7 +390,7 @@ public class CalculatorWindow implements ActionListener {
             outputLabel.setText("");
         }
 
-        // Validate contribution amount input
+        // Validate contribution amount
         String input1 = textField1.getText();
         if (input1.isEmpty()) {
             infoButton2.setVisible(false);
@@ -412,7 +420,7 @@ public class CalculatorWindow implements ActionListener {
             outputLabel1.setText("");
         }
 
-        // Validate return rate input
+        // Validate return rate
         String input2 = textField2.getText();
         if (input2.isEmpty()) {
             infoButton3.setVisible(false);
@@ -447,7 +455,7 @@ public class CalculatorWindow implements ActionListener {
             outputLabel4.setText("");
         }
 
-        // Validate investment period input
+        // Validate investment period
         String input3 = textField3.getText();
         if (input3.isEmpty()) {
             infoButton4.setVisible(false);
@@ -527,7 +535,7 @@ public class CalculatorWindow implements ActionListener {
         }
     }
 
-    // Method to get the compound rate based on the selected interval
+    // Method to get the compound rate
     public int getCompoundRate(){
         if(Objects.equals(selectedOption1, "monthly")){
             return 12;
@@ -549,22 +557,26 @@ public class CalculatorWindow implements ActionListener {
         int compoundRate = getCompoundRate();
         for(int i = 0; i < investmentInterval; i++){
             if(Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "year")){
-                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100)) * (1 + (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1)
+                        / (returnRate / 100)) * (1 + (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 interestforGrowthChart = values[i] - startingAmount;
                 contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "year")) {
-                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1) / (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 100), i + 1) - 1)
+                        / (returnRate / 100))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 interestforGrowthChart = values[i] - startingAmount;
                 contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             } else if (Objects.equals(selectedOption2, "beginning") && Objects.equals(selectedOption3, "month")) {
-                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200)) * (1 + (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1)
+                        / (returnRate / 1200)) * (1 + (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 interestforGrowthChart = values[i] - startingAmount;
                 contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
             } else if (Objects.equals(selectedOption2, "end") && Objects.equals(selectedOption3, "month")) {
-                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1) / (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
+                values[i] = (contributionAmount * ((Math.pow(1 + (returnRate / 1200), 12 * (i + 1)) - 1)
+                        / (returnRate / 1200))) + startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 interestforGrowthChart = values[i] - startingAmount;
                 contributionforGrowthChart = values[i] - startingAmount * (Math.pow(1 + (returnRate / (compoundRate * 100)), i + 1));
                 InvestmentGrowthChart.createDataset(startingAmount, interestforGrowthChart, contributionforGrowthChart);
