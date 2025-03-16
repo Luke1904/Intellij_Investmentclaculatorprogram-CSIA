@@ -55,21 +55,16 @@ public class InvestmentPieChart {
     public static DefaultPieDataset createDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
 
-        // Retrieve values from the CalculatorWindow class
-        double startingAmount = CalculatorWindow.getStartingAmount(); // Starting amount
-        double contributions = CalculatorWindow.getTotalContribution(); // Total contributions
-        double interest = CalculatorWindow.getTotalInterest(); // Total interest
-
         // Add values to the dataset
-        dataset.setValue("Starting Amount", startingAmount);
-        dataset.setValue("Contributions", contributions);
-        dataset.setValue("Interest", interest);
+        dataset.setValue("Starting Amount", CalculatorWindow.getStartingAmount());
+        dataset.setValue("Contributions", CalculatorWindow.getTotalContribution());
+        dataset.setValue("Interest", CalculatorWindow.getTotalInterest());
 
         return dataset;
     }
 
     // Method to get the chart panel for display
-    public static ChartPanel getChartPanel() {
+    public  static ChartPanel getChartPanel() {
         JFreeChart chart = InvestmentPieChart.createChart(); // Create the chart
         chart.setBackgroundPaint(UIManager.getColor("Panel.background")); // Set background color
         return new ChartPanel(chart); // Return the chart panel

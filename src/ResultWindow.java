@@ -165,7 +165,9 @@ public class ResultWindow implements ActionListener {
 
         // Action listener for the create save button
         createSave.addActionListener(e -> {
-            String directory = "X:\\Saves\\";
+            // Get the user's home directory
+            String homeDirectory = System.getProperty("user.home");
+            String directory = homeDirectory + "\\Desktop\\Saves\\";
             String baseFileName = "investment_data";
             String extension = ".txt";
             File file;
