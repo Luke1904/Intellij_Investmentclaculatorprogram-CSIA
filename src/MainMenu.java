@@ -66,7 +66,8 @@ public class MainMenu implements ActionListener {
 
         button2.addActionListener(e -> {
             if (e.getSource() == button2) { // Check if the source of the event is button2
-                String directoryPath = "X:\\Saves\\"; // Path to the saves directory
+                String homeDirectory = System.getProperty("user.home"); // Get the user's home directory
+                String directoryPath = homeDirectory + "\\Desktop\\Saves"; // Path to the saves directory
                 File directory = new File(directoryPath); // Create a File object for the directory
                 try {
                     Desktop.getDesktop().open(directory); // Open the directory using the default file manager
